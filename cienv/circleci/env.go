@@ -11,6 +11,10 @@ type Client struct {
 	Getenv func(string) string
 }
 
+func (client Client) CI() string {
+	return "circleci"
+}
+
 func (client Client) Match() bool {
 	return client.Getenv("CIRCLECI") != ""
 }
@@ -23,12 +27,20 @@ func (client Client) RepoName() string {
 	return client.Getenv("CIRCLE_PROJECT_REPONAME")
 }
 
-func (client Client) RepoPath() string {
-	return client.RepoOwner() + "/" + client.RepoName()
+func (client Client) SHA() string {
+	return client.Getenv("CIRCLE_SHA1")
 }
 
-func (client Client) SHA1() string {
-	return client.Getenv("CIRCLE_SHA1")
+func (client Client) Ref() string {
+	return ""
+}
+
+func (client Client) Branch() string {
+	return client.Getenv("CIRCLE_BRANCH")
+}
+
+func (client Client) Tag() string {
+	return client.Getenv("CIRCLE_TAG")
 }
 
 func (client Client) IsPR() bool {

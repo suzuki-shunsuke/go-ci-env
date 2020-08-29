@@ -11,14 +11,17 @@ import (
 )
 
 type Platform interface {
+	CI() string
 	Match() bool
 	RepoOwner() string
 	RepoName() string
-	RepoPath() string
-	SHA1() string
+	Branch() string
+	SHA() string
+	Tag() string
+	Ref() string
 	IsPR() bool
 	PRNumber() (int, error)
-	// TODO branch
+	// TODO base branch
 }
 
 func Get() Platform {

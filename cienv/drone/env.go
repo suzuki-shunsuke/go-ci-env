@@ -9,6 +9,10 @@ type Client struct {
 	Getenv func(string) string
 }
 
+func (client Client) CI() string {
+	return "drone"
+}
+
 func (client Client) Match() bool {
 	return client.Getenv("DRONE") != ""
 }
@@ -21,12 +25,20 @@ func (client Client) RepoName() string {
 	return client.Getenv("DRONE_REPO_NAME")
 }
 
-func (client Client) RepoPath() string {
-	return client.RepoOwner() + "/" + client.RepoName()
+func (client Client) Ref() string {
+	return client.Getenv("DRONE_COMMIT_REF")
 }
 
-func (client Client) SHA1() string {
-	return client.Getenv("DRONE_COMMIT_SHA1")
+func (client Client) Tag() string {
+	return client.Getenv("DRONE_TAG")
+}
+
+func (client Client) Branch() string {
+	return client.Getenv("DRONE_BRANCH")
+}
+
+func (client Client) SHA() string {
+	return client.Getenv("DRONE_COMMIT_SHA")
 }
 
 func (client Client) IsPR() bool {

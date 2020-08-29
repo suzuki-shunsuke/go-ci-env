@@ -10,6 +10,10 @@ type Client struct {
 	Getenv func(string) string
 }
 
+func (client Client) CI() string {
+	return "codebuild"
+}
+
 func (client Client) Match() bool {
 	return client.Getenv("CODEBUILD_BUILD_ID") != ""
 }
@@ -34,12 +38,20 @@ func (client Client) RepoName() string {
 	return ""
 }
 
-func (client Client) RepoPath() string {
-	return client.RepoOwner() + "/" + client.RepoName()
+func (client Client) Tag() string {
+	return ""
 }
 
-func (client Client) SHA1() string {
+func (client Client) SHA() string {
 	return client.Getenv("CODEBUILD_RESOLVED_SOURCE_VERSION")
+}
+
+func (client Client) Ref() string {
+	return client.Getenv("CODEBUILD_WEBHOOK_HEAD_REF")
+}
+
+func (client Client) Branch() string {
+	return strings.TrimPrefix(client.Getenv("CODEBUILD_WEBHOOK_HEAD_REF"), "refs/heads/")
 }
 
 func (client Client) IsPR() bool {

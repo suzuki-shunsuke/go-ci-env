@@ -17,33 +17,40 @@ type Client struct {
 	Getenv func(string) string
 }
 
+func (client Client) CI() string {
+	return "github-actions"
+}
+
 func (client Client) Match() bool {
 	return client.Getenv("GITHUB_ACTIONS") != ""
 }
 
 func (client Client) RepoOwner() string {
-	a := strings.SplitN(client.Getenv("GITHUB_REPOSITORY"), "/", 2)
-	return a[0]
+	return client.Getenv("GITHUB_REPOSITORY_OWNER")
 }
 
 func (client Client) RepoName() string {
-	a := strings.SplitN(client.Getenv("GITHUB_REPOSITORY"), "/", 2)
-	if len(a) == 2 { //nolint:gomnd
-		return a[1]
-	}
-	return ""
+	return strings.TrimPrefix(client.Getenv("GITHUB_REPOSITORY"), client.RepoOwner()+"/")
 }
 
-func (client Client) RepoPath() string {
-	return client.RepoOwner() + "/" + client.RepoName()
-}
-
-func (client Client) SHA1() string {
+func (client Client) SHA() string {
 	return client.Getenv("GITHUB_SHA")
 }
 
+func (client Client) Tag() string {
+	return strings.TrimPrefix(client.Getenv("GITHUB_REF"), "refs/tags/")
+}
+
+func (client Client) Ref() string {
+	return client.Getenv("GITHUB_REF")
+}
+
+func (client Client) Branch() string {
+	return strings.TrimPrefix(client.Getenv("GITHUB_REF"), "refs/heads/")
+}
+
 func (client Client) IsPR() bool {
-	return client.Getenv("GITHUB_SHA") != ""
+	return client.Getenv("GITHUB_EVENT_NAME") == "pull_request"
 }
 
 func (client Client) PRNumber() (int, error) {
