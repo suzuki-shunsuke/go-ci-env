@@ -117,8 +117,8 @@ func TestClient_SHA1(t *testing.T) {
 		{
 			title: "true",
 			m: map[string]string{
-				"DRONE":             "true",
-				"DRONE_COMMIT_SHA1": "c0c29ca335f2987583c9ecf077e4b476ca78b660",
+				"DRONE":            "true",
+				"DRONE_COMMIT_SHA": "c0c29ca335f2987583c9ecf077e4b476ca78b660",
 			},
 			exp: "c0c29ca335f2987583c9ecf077e4b476ca78b660",
 		},

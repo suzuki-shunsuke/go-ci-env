@@ -38,7 +38,7 @@ func (client Client) Branch() string {
 }
 
 func (client Client) SHA1() string {
-	return client.Getenv("DRONE_COMMIT_SHA1")
+	return client.Getenv("DRONE_COMMIT_SHA")
 }
 
 func (client Client) IsPR() bool {
