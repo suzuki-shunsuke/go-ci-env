@@ -16,7 +16,6 @@ jobs:
       run: |
         curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.30.0
         golangci-lint run
-        # TODO
-        #     - name: test
-        #       run: |
-        #         bash ci/test.sh go-ci-env
+    - name: test
+      run: |
+        bash ci/test.sh go-ci-env
