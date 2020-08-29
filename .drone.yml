@@ -1,0 +1,21 @@
+---
+kind: pipeline
+name: build
+clone:
+  depth: 1
+volumes:
+  - name: gopath
+    temp: {}
+steps:
+  - name: download go modules
+    image: golang:1.15.0
+    commands:
+      - go mod download
+    volumes: &volumes
+      - name: gopath
+        path: /go
+  - name: test
+    image: golang:1.15.0
+    commands:
+      - go test -race -covermode=atomic ./...
+    volumes: *volumes
