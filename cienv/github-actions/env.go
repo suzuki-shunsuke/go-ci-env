@@ -33,7 +33,7 @@ func (client Client) RepoName() string {
 	return strings.TrimPrefix(client.Getenv("GITHUB_REPOSITORY"), client.RepoOwner()+"/")
 }
 
-func (client Client) SHA1() string {
+func (client Client) SHA() string {
 	return client.Getenv("GITHUB_SHA")
 }
 

@@ -30,9 +30,9 @@ func TestPlatform(t *testing.T) {
 		}
 	})
 
-	t.Run("Platform.SHA1", func(t *testing.T) {
-		if platform.SHA1() == "" {
-			t.Error("platform.SHA1() is empty")
+	t.Run("Platform.SHA", func(t *testing.T) {
+		if platform.SHA() == "" {
+			t.Error("platform.SHA() is empty")
 		}
 	})
 

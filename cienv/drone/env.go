@@ -37,7 +37,7 @@ func (client Client) Branch() string {
 	return client.Getenv("DRONE_BRANCH")
 }
 
-func (client Client) SHA1() string {
+func (client Client) SHA() string {
 	return client.Getenv("DRONE_COMMIT_SHA")
 }
 

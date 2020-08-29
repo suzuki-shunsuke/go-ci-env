@@ -16,7 +16,7 @@ type Platform interface {
 	RepoOwner() string
 	RepoName() string
 	Branch() string
-	SHA1() string
+	SHA() string
 	Tag() string
 	Ref() string
 	IsPR() bool

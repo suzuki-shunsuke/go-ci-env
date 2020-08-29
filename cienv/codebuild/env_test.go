@@ -108,7 +108,7 @@ func TestClient_RepoName(t *testing.T) {
 	}
 }
 
-func TestClient_SHA1(t *testing.T) {
+func TestClient_SHA(t *testing.T) {
 	data := []struct {
 		title string
 		m     map[string]string
@@ -129,9 +129,9 @@ func TestClient_SHA1(t *testing.T) {
 			client := codebuild.Client{
 				Getenv: newGetenv(d.m),
 			}
-			sha := client.SHA1()
+			sha := client.SHA()
 			if sha != d.exp {
-				t.Fatal("client.SHA1() = " + sha + ", wanted " + d.exp)
+				t.Fatal("client.SHA() = " + sha + ", wanted " + d.exp)
 			}
 		})
 	}

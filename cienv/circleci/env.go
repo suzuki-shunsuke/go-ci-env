@@ -27,7 +27,7 @@ func (client Client) RepoName() string {
 	return client.Getenv("CIRCLE_PROJECT_REPONAME")
 }
 
-func (client Client) SHA1() string {
+func (client Client) SHA() string {
 	return client.Getenv("CIRCLE_SHA1")
 }
 

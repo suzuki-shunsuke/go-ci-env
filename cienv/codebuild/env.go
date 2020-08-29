@@ -42,7 +42,7 @@ func (client Client) Tag() string {
 	return ""
 }
 
-func (client Client) SHA1() string {
+func (client Client) SHA() string {
 	return client.Getenv("CODEBUILD_RESOLVED_SOURCE_VERSION")
 }
 
