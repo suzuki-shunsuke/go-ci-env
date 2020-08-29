@@ -14,7 +14,6 @@ type Platform interface {
 	Match() bool
 	RepoOwner() string
 	RepoName() string
-	RepoPath() string
 	Branch() string
 	SHA1() string
 	Tag() string

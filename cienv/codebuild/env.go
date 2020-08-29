@@ -34,10 +34,6 @@ func (client Client) RepoName() string {
 	return ""
 }
 
-func (client Client) RepoPath() string {
-	return client.RepoOwner() + "/" + client.RepoName()
-}
-
 func (client Client) Tag() string {
 	return ""
 }

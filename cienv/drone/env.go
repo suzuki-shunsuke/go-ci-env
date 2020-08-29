@@ -21,10 +21,6 @@ func (client Client) RepoName() string {
 	return client.Getenv("DRONE_REPO_NAME")
 }
 
-func (client Client) RepoPath() string {
-	return client.RepoOwner() + "/" + client.RepoName()
-}
-
 func (client Client) Ref() string {
 	return client.Getenv("DRONE_COMMIT_REF")
 }

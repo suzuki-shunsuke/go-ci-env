@@ -22,20 +22,11 @@ func (client Client) Match() bool {
 }
 
 func (client Client) RepoOwner() string {
-	a := strings.SplitN(client.Getenv("GITHUB_REPOSITORY"), "/", 2)
-	return a[0]
+	return client.Getenv("GITHUB_REPOSITORY_OWNER")
 }
 
 func (client Client) RepoName() string {
-	a := strings.SplitN(client.Getenv("GITHUB_REPOSITORY"), "/", 2)
-	if len(a) == 2 { //nolint:gomnd
-		return a[1]
-	}
-	return ""
-}
-
-func (client Client) RepoPath() string {
-	return client.RepoOwner() + "/" + client.RepoName()
+	return strings.TrimPrefix(client.Getenv("GITHUB_REPOSITORY"), client.RepoOwner()+"/")
 }
 
 func (client Client) SHA1() string {
@@ -43,7 +34,7 @@ func (client Client) SHA1() string {
 }
 
 func (client Client) Tag() string {
-	return ""
+	return strings.TrimPrefix(client.Getenv("GITHUB_REF"), "refs/tags/")
 }
 
 func (client Client) Ref() string {
@@ -55,7 +46,7 @@ func (client Client) Branch() string {
 }
 
 func (client Client) IsPR() bool {
-	return client.Getenv("GITHUB_SHA") != ""
+	return client.Getenv("GITHUB_EVENT_NAME") == "pull_request"
 }
 
 func (client Client) PRNumber() (int, error) {
