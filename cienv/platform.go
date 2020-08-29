@@ -11,6 +11,7 @@ import (
 )
 
 type Platform interface {
+	CI() string
 	Match() bool
 	RepoOwner() string
 	RepoName() string

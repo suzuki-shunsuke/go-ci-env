@@ -11,6 +11,10 @@ type Client struct {
 	Getenv func(string) string
 }
 
+func (client Client) CI() string {
+	return "circleci"
+}
+
 func (client Client) Match() bool {
 	return client.Getenv("CIRCLECI") != ""
 }
