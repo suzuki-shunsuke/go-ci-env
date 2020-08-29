@@ -31,6 +31,18 @@ func (client Client) SHA1() string {
 	return client.Getenv("CIRCLE_SHA1")
 }
 
+func (client Client) Ref() string {
+	return ""
+}
+
+func (client Client) Branch() string {
+	return client.Getenv("CIRCLE_BRANCH")
+}
+
+func (client Client) Tag() string {
+	return client.Getenv("CIRCLE_TAG")
+}
+
 func (client Client) IsPR() bool {
 	return client.Getenv("CIRCLE_PULL_REQUEST") != ""
 }

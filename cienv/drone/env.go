@@ -25,6 +25,18 @@ func (client Client) RepoPath() string {
 	return client.RepoOwner() + "/" + client.RepoName()
 }
 
+func (client Client) Ref() string {
+	return client.Getenv("DRONE_COMMIT_REF")
+}
+
+func (client Client) Tag() string {
+	return client.Getenv("DRONE_TAG")
+}
+
+func (client Client) Branch() string {
+	return client.Getenv("DRONE_BRANCH")
+}
+
 func (client Client) SHA1() string {
 	return client.Getenv("DRONE_COMMIT_SHA1")
 }

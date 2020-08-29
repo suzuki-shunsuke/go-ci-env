@@ -42,6 +42,18 @@ func (client Client) SHA1() string {
 	return client.Getenv("GITHUB_SHA")
 }
 
+func (client Client) Tag() string {
+	return ""
+}
+
+func (client Client) Ref() string {
+	return client.Getenv("GITHUB_REF")
+}
+
+func (client Client) Branch() string {
+	return strings.TrimPrefix(client.Getenv("GITHUB_REF"), "refs/heads/")
+}
+
 func (client Client) IsPR() bool {
 	return client.Getenv("GITHUB_SHA") != ""
 }

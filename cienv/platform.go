@@ -15,10 +15,13 @@ type Platform interface {
 	RepoOwner() string
 	RepoName() string
 	RepoPath() string
+	Branch() string
 	SHA1() string
+	Tag() string
+	Ref() string
 	IsPR() bool
 	PRNumber() (int, error)
-	// TODO branch
+	// TODO base branch
 }
 
 func Get() Platform {
