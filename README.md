@@ -1,1 +1,12 @@
 # go-ci-env
+
+[![PkgGoDev](https://pkg.go.dev/badge/github.com/suzuki-shunsuke/go-ci-env/cienv)](https://pkg.go.dev/github.com/suzuki-shunsuke/go-ci-env/cienv)
+[![GitHub last commit](https://img.shields.io/github/last-commit/suzuki-shunsuke/go-ci-env.svg)](https://github.com/suzuki-shunsuke/go-ci-env)
+[![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://raw.githubusercontent.com/suzuki-shunsuke/go-ci-env/master/LICENSE)
+
+Go library to get CI meta data from the environment variables.
+go-ci-env supports various CI platform and provides unified API to abstract the difference of the platform.
+
+## LICENSE
+
+[MIT](LICENSE)
