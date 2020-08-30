@@ -37,6 +37,10 @@ func (client Client) Branch() string {
 	return client.Getenv("DRONE_SOURCE_BRANCH")
 }
 
+func (client Client) PRBaseBranch() string {
+	return client.Getenv("DRONE_TARGET_BRANCH")
+}
+
 func (client Client) SHA() string {
 	return client.Getenv("DRONE_COMMIT_SHA")
 }

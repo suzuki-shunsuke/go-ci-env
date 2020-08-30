@@ -39,6 +39,10 @@ func (client Client) Branch() string {
 	return client.Getenv("CIRCLE_BRANCH")
 }
 
+func (client Client) PRBaseBranch() string {
+	return ""
+}
+
 func (client Client) Tag() string {
 	return client.Getenv("CIRCLE_TAG")
 }

@@ -49,6 +49,10 @@ func (client Client) Branch() string {
 	return strings.TrimPrefix(client.Getenv("GITHUB_REF"), "refs/heads/")
 }
 
+func (client Client) PRBaseBranch() string {
+	return strings.TrimPrefix(client.Getenv("GITHUB_BASE_REF"), "refs/heads/")
+}
+
 func (client Client) IsPR() bool {
 	return client.Getenv("GITHUB_EVENT_NAME") == "pull_request"
 }

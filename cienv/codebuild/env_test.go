@@ -166,6 +166,35 @@ func TestClient_Branch(t *testing.T) {
 	}
 }
 
+func TestClient_PRBaseBranch(t *testing.T) {
+	data := []struct {
+		title string
+		m     map[string]string
+		exp   string
+	}{
+		{
+			title: "true",
+			m: map[string]string{
+				"CODEBUILD_BUILD_ID":         "xxx",
+				"CODEBUILD_WEBHOOK_BASE_REF": "refs/heads/test",
+			},
+			exp: "test",
+		},
+	}
+	for _, d := range data {
+		d := d
+		t.Run(d.title, func(t *testing.T) {
+			client := codebuild.Client{
+				Getenv: newGetenv(d.m),
+			}
+			branch := client.PRBaseBranch()
+			if branch != d.exp {
+				t.Fatal("client.PRBaseBranch() = " + branch + ", wanted " + d.exp)
+			}
+		})
+	}
+}
+
 func TestClient_IsPR(t *testing.T) {
 	data := []struct {
 		title string
