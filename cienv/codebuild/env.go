@@ -54,6 +54,10 @@ func (client Client) Branch() string {
 	return strings.TrimPrefix(client.Getenv("CODEBUILD_WEBHOOK_HEAD_REF"), "refs/heads/")
 }
 
+func (client Client) PRBaseBranch() string {
+	return strings.TrimPrefix(client.Getenv("CODEBUILD_WEBHOOK_BASE_REF"), "refs/heads/")
+}
+
 func (client Client) IsPR() bool {
 	return strings.HasPrefix(client.Getenv("CODEBUILD_SOURCE_VERSION"), "pr/")
 }

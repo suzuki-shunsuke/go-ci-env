@@ -21,7 +21,7 @@ type Platform interface {
 	Ref() string
 	IsPR() bool
 	PRNumber() (int, error)
-	// TODO base branch
+	PRBaseBranch() string
 }
 
 func Get() Platform {
