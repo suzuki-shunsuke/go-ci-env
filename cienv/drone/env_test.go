@@ -146,8 +146,8 @@ func TestClient_Branch(t *testing.T) {
 		{
 			title: "true",
 			m: map[string]string{
-				"DRONE":        "true",
-				"DRONE_BRANCH": "test",
+				"DRONE":               "true",
+				"DRONE_SOURCE_BRANCH": "test",
 			},
 			exp: "test",
 		},

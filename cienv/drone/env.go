@@ -34,7 +34,7 @@ func (client Client) Tag() string {
 }
 
 func (client Client) Branch() string {
-	return client.Getenv("DRONE_BRANCH")
+	return client.Getenv("DRONE_SOURCE_BRANCH")
 }
 
 func (client Client) SHA() string {
