@@ -15,7 +15,7 @@ func (client Client) CI() string {
 }
 
 func (client Client) Match() bool {
-	return client.Getenv("CODEBUILD_BUILD_ID") != ""
+	return client.Getenv("CODEBUILD_BUILD_ID") != "" || client.Getenv("CODEBUILD_CI") == "true"
 }
 
 func (client Client) RepoOwner() string {

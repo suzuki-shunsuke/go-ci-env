@@ -27,6 +27,13 @@ func TestClient_Match(t *testing.T) {
 			exp: true,
 		},
 		{
+			title: "true",
+			m: map[string]string{
+				"CODEBUILD_CI": "true",
+			},
+			exp: true,
+		},
+		{
 			title: "false",
 			m:     map[string]string{},
 		},
