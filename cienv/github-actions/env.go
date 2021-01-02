@@ -2,6 +2,7 @@ package actions
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"strings"
 )
@@ -69,7 +70,7 @@ func (client Client) PRNumber() (int, error) {
 func (client Client) getPRNumberFromPayload(body io.Reader) (int, error) {
 	p := gitHubActionsPayload{}
 	if err := json.NewDecoder(body).Decode(&p); err != nil {
-		return 0, err
+		return 0, fmt.Errorf("parse a GitHub Action payload: %w", err)
 	}
 	return p.PullRequest.Number, nil
 }
