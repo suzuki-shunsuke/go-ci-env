@@ -14,6 +14,7 @@ func newGetenv(m map[string]string) func(string) string {
 }
 
 func TestClient_Match(t *testing.T) {
+	t.Parallel()
 	data := []struct {
 		title string
 		m     map[string]string
@@ -41,6 +42,7 @@ func TestClient_Match(t *testing.T) {
 	for _, d := range data {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
+			t.Parallel()
 			client := codebuild.Client{
 				Getenv: newGetenv(d.m),
 			}
@@ -58,6 +60,7 @@ func TestClient_Match(t *testing.T) {
 }
 
 func TestClient_RepoOwner(t *testing.T) {
+	t.Parallel()
 	data := []struct {
 		title string
 		m     map[string]string
@@ -75,6 +78,7 @@ func TestClient_RepoOwner(t *testing.T) {
 	for _, d := range data {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
+			t.Parallel()
 			client := codebuild.Client{
 				Getenv: newGetenv(d.m),
 			}
@@ -87,6 +91,7 @@ func TestClient_RepoOwner(t *testing.T) {
 }
 
 func TestClient_RepoName(t *testing.T) {
+	t.Parallel()
 	data := []struct {
 		title string
 		m     map[string]string
@@ -104,6 +109,7 @@ func TestClient_RepoName(t *testing.T) {
 	for _, d := range data {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
+			t.Parallel()
 			client := codebuild.Client{
 				Getenv: newGetenv(d.m),
 			}
@@ -116,6 +122,7 @@ func TestClient_RepoName(t *testing.T) {
 }
 
 func TestClient_SHA(t *testing.T) {
+	t.Parallel()
 	data := []struct {
 		title string
 		m     map[string]string
@@ -133,6 +140,7 @@ func TestClient_SHA(t *testing.T) {
 	for _, d := range data {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
+			t.Parallel()
 			client := codebuild.Client{
 				Getenv: newGetenv(d.m),
 			}
@@ -145,6 +153,7 @@ func TestClient_SHA(t *testing.T) {
 }
 
 func TestClient_Branch(t *testing.T) {
+	t.Parallel()
 	data := []struct {
 		title string
 		m     map[string]string
@@ -162,6 +171,7 @@ func TestClient_Branch(t *testing.T) {
 	for _, d := range data {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
+			t.Parallel()
 			client := codebuild.Client{
 				Getenv: newGetenv(d.m),
 			}
@@ -174,6 +184,7 @@ func TestClient_Branch(t *testing.T) {
 }
 
 func TestClient_PRBaseBranch(t *testing.T) {
+	t.Parallel()
 	data := []struct {
 		title string
 		m     map[string]string
@@ -191,6 +202,7 @@ func TestClient_PRBaseBranch(t *testing.T) {
 	for _, d := range data {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
+			t.Parallel()
 			client := codebuild.Client{
 				Getenv: newGetenv(d.m),
 			}
@@ -203,6 +215,7 @@ func TestClient_PRBaseBranch(t *testing.T) {
 }
 
 func TestClient_IsPR(t *testing.T) {
+	t.Parallel()
 	data := []struct {
 		title string
 		m     map[string]string
@@ -226,6 +239,7 @@ func TestClient_IsPR(t *testing.T) {
 	for _, d := range data {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
+			t.Parallel()
 			client := codebuild.Client{
 				Getenv: newGetenv(d.m),
 			}
@@ -243,6 +257,7 @@ func TestClient_IsPR(t *testing.T) {
 }
 
 func TestClient_PRNumber(t *testing.T) {
+	t.Parallel()
 	data := []struct {
 		title string
 		m     map[string]string
@@ -276,6 +291,7 @@ func TestClient_PRNumber(t *testing.T) {
 	for _, d := range data {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
+			t.Parallel()
 			client := codebuild.Client{
 				Getenv: newGetenv(d.m),
 			}
