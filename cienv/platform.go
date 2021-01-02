@@ -24,10 +24,35 @@ type Platform interface {
 	PRBaseBranch() string
 }
 
+func read(p string) (io.ReadCloser, error) {
+	return os.Open(p)
+}
+
 func Get() Platform {
-	return get(os.Getenv, func(p string) (io.ReadCloser, error) {
-		return os.Open(p)
-	})
+	return get(os.Getenv, read)
+}
+
+func GetByName(name string) Platform {
+	switch name {
+	case "github-actions":
+		return actions.Client{
+			Read:   read,
+			Getenv: os.Getenv,
+		}
+	case "drone":
+		return drone.Client{
+			Getenv: os.Getenv,
+		}
+	case "circleci":
+		return circleci.Client{
+			Getenv: os.Getenv,
+		}
+	case "codebuild":
+		return codebuild.Client{
+			Getenv: os.Getenv,
+		}
+	}
+	return nil
 }
 
 func get(getEnv func(string) string, read func(string) (io.ReadCloser, error)) Platform {
