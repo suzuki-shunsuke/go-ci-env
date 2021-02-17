@@ -8,14 +8,14 @@ volumes:
     temp: {}
 steps:
   - name: download go modules
-    image: golang:1.15.7
+    image: golang:1.16.0
     commands:
       - go mod download
     volumes: &volumes
       - name: gopath
         path: /go
   - name: test
-    image: golang:1.15.7
+    image: golang:1.16.0
     commands:
       - go test -race -covermode=atomic ./...
     volumes: *volumes
