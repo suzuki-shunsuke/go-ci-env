@@ -7,7 +7,7 @@ import (
 	"testing"
 	"text/template"
 
-	"github.com/suzuki-shunsuke/go-ci-env/cienv/generic"
+	"github.com/suzuki-shunsuke/go-ci-env/v2/cienv/generic"
 )
 
 func render(k string) (string, error) {
@@ -17,7 +17,7 @@ func render(k string) (string, error) {
 	}
 	buf := &bytes.Buffer{}
 	if err := tmpl.Execute(buf, nil); err != nil {
-		return "", nil
+		return "", fmt.Errorf("render template: %w", err)
 	}
 	if s := strings.TrimSpace(buf.String()); s != "" {
 		return s, nil

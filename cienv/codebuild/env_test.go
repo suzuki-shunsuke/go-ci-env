@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/suzuki-shunsuke/go-ci-env/cienv/codebuild"
+	"github.com/suzuki-shunsuke/go-ci-env/v2/cienv/codebuild"
 )
 
 func newGetenv(m map[string]string) func(string) string {
@@ -277,7 +277,7 @@ func TestClient_PRNumber(t *testing.T) {
 			m: map[string]string{
 				"CODEBUILD_BUILD_ID": "xxx",
 			},
-			exp: -1,
+			exp: 0,
 		},
 		{
 			title: "invalid pull request",

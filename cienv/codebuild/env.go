@@ -65,11 +65,11 @@ func (client Client) IsPR() bool {
 func (client Client) PRNumber() (int, error) {
 	pr := client.Getenv("CODEBUILD_SOURCE_VERSION")
 	if !strings.HasPrefix(pr, "pr/") {
-		return -1, nil
+		return 0, nil
 	}
 	i := strings.Index(pr, "/")
 	if i == -1 {
-		return -1, nil
+		return 0, nil
 	}
 	b, err := strconv.Atoi(pr[i+1:])
 	if err == nil {

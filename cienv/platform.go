@@ -4,10 +4,10 @@ import (
 	"io"
 	"os"
 
-	"github.com/suzuki-shunsuke/go-ci-env/cienv/circleci"
-	"github.com/suzuki-shunsuke/go-ci-env/cienv/codebuild"
-	"github.com/suzuki-shunsuke/go-ci-env/cienv/drone"
-	actions "github.com/suzuki-shunsuke/go-ci-env/cienv/github-actions"
+	"github.com/suzuki-shunsuke/go-ci-env/v2/cienv/circleci"
+	"github.com/suzuki-shunsuke/go-ci-env/v2/cienv/codebuild"
+	"github.com/suzuki-shunsuke/go-ci-env/v2/cienv/drone"
+	actions "github.com/suzuki-shunsuke/go-ci-env/v2/cienv/github-actions"
 )
 
 type Platform interface {
@@ -20,12 +20,13 @@ type Platform interface {
 	Tag() string
 	Ref() string
 	IsPR() bool
+	// PRNumber returns 0 if it isn't a pull request
 	PRNumber() (int, error)
 	PRBaseBranch() string
 }
 
 func read(p string) (io.ReadCloser, error) {
-	return os.Open(p)
+	return os.Open(p) //nolint:wrapcheck
 }
 
 func Get() Platform {

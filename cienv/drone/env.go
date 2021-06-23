@@ -52,7 +52,7 @@ func (client Client) IsPR() bool {
 func (client Client) PRNumber() (int, error) {
 	pr := client.Getenv("DRONE_PULL_REQUEST")
 	if pr == "" {
-		return -1, nil
+		return 0, nil
 	}
 	b, err := strconv.Atoi(pr)
 	if err == nil {

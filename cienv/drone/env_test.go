@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/suzuki-shunsuke/go-ci-env/cienv/drone"
+	"github.com/suzuki-shunsuke/go-ci-env/v2/cienv/drone"
 )
 
 func newGetenv(m map[string]string) func(string) string {
@@ -301,7 +301,7 @@ func TestClient_PRNumber(t *testing.T) {
 			m: map[string]string{
 				"DRONE": "true",
 			},
-			exp: -1,
+			exp: 0,
 		},
 		{
 			title: "invalid pull request",

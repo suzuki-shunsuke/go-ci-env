@@ -54,7 +54,7 @@ func (client Client) IsPR() bool {
 func (client Client) PRNumber() (int, error) {
 	pr := client.Getenv("CIRCLE_PULL_REQUEST")
 	if pr == "" {
-		return -1, nil
+		return 0, nil
 	}
 	a := strings.LastIndex(pr, "/")
 	if a == -1 {
