@@ -26,7 +26,7 @@ type Platform interface {
 }
 
 func read(p string) (io.ReadCloser, error) {
-	return os.Open(p)
+	return os.Open(p) //nolint:wrapcheck
 }
 
 func Get() Platform {
