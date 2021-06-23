@@ -3,7 +3,7 @@ package cienv_test
 import (
 	"testing"
 
-	"github.com/suzuki-shunsuke/go-ci-env/cienv"
+	"github.com/suzuki-shunsuke/go-ci-env/v2/cienv"
 )
 
 func TestPlatform(t *testing.T) {

@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/suzuki-shunsuke/go-ci-env/cienv/codebuild"
+	"github.com/suzuki-shunsuke/go-ci-env/v2/cienv/codebuild"
 )
 
 func newGetenv(m map[string]string) func(string) string {

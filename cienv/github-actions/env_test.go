@@ -3,7 +3,7 @@ package actions_test
 import (
 	"testing"
 
-	actions "github.com/suzuki-shunsuke/go-ci-env/cienv/github-actions"
+	actions "github.com/suzuki-shunsuke/go-ci-env/v2/cienv/github-actions"
 )
 
 func newGetenv(m map[string]string) func(string) string {

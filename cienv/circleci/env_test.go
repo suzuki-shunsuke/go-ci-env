@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/suzuki-shunsuke/go-ci-env/cienv/circleci"
+	"github.com/suzuki-shunsuke/go-ci-env/v2/cienv/circleci"
 )
 
 func newGetenv(m map[string]string) func(string) string {

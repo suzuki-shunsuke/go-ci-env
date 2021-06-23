@@ -4,10 +4,10 @@ import (
 	"io"
 	"os"
 
-	"github.com/suzuki-shunsuke/go-ci-env/cienv/circleci"
-	"github.com/suzuki-shunsuke/go-ci-env/cienv/codebuild"
-	"github.com/suzuki-shunsuke/go-ci-env/cienv/drone"
-	actions "github.com/suzuki-shunsuke/go-ci-env/cienv/github-actions"
+	"github.com/suzuki-shunsuke/go-ci-env/v2/cienv/circleci"
+	"github.com/suzuki-shunsuke/go-ci-env/v2/cienv/codebuild"
+	"github.com/suzuki-shunsuke/go-ci-env/v2/cienv/drone"
+	actions "github.com/suzuki-shunsuke/go-ci-env/v2/cienv/github-actions"
 )
 
 type Platform interface {

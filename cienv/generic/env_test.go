@@ -7,7 +7,7 @@ import (
 	"testing"
 	"text/template"
 
-	"github.com/suzuki-shunsuke/go-ci-env/cienv/generic"
+	"github.com/suzuki-shunsuke/go-ci-env/v2/cienv/generic"
 )
 
 func render(k string) (string, error) {
