@@ -270,7 +270,7 @@ func TestClient_PRNumber(t *testing.T) {
 			m: map[string]string{
 				"CIRCLECI": "true",
 			},
-			exp: -1,
+			exp: 0,
 		},
 		{
 			title: "invalid pull request",

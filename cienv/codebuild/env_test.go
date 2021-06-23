@@ -277,7 +277,7 @@ func TestClient_PRNumber(t *testing.T) {
 			m: map[string]string{
 				"CODEBUILD_BUILD_ID": "xxx",
 			},
-			exp: -1,
+			exp: 0,
 		},
 		{
 			title: "invalid pull request",

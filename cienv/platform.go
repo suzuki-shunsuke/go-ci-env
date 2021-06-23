@@ -20,6 +20,7 @@ type Platform interface {
 	Tag() string
 	Ref() string
 	IsPR() bool
+	// PRNumber returns 0 if it isn't a pull request
 	PRNumber() (int, error)
 	PRBaseBranch() string
 }

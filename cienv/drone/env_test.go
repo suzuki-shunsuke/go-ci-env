@@ -301,7 +301,7 @@ func TestClient_PRNumber(t *testing.T) {
 			m: map[string]string{
 				"DRONE": "true",
 			},
-			exp: -1,
+			exp: 0,
 		},
 		{
 			title: "invalid pull request",
