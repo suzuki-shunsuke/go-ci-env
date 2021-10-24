@@ -58,5 +58,5 @@ func (client Client) PRNumber() (int, error) {
 	if err == nil {
 		return b, nil
 	}
-	return 0, fmt.Errorf("DRONE_PULL_REQUEST is invalid. It is failed to parse DRONE_PULL_REQUEST as an integer: %w", err)
+	return 0, fmt.Errorf("DRONE_PULL_REQUEST is invalid. It failed to parse DRONE_PULL_REQUEST as an integer: %w", err)
 }

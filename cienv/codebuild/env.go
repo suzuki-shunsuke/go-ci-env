@@ -75,5 +75,5 @@ func (client Client) PRNumber() (int, error) {
 	if err == nil {
 		return b, nil
 	}
-	return 0, fmt.Errorf("CODEBUILD_SOURCE_VERSION is invalid. It is failed to parse CODEBUILD_SOURCE_VERSION as an integer: %w", err)
+	return 0, fmt.Errorf("CODEBUILD_SOURCE_VERSION is invalid. It failed to parse CODEBUILD_SOURCE_VERSION as an integer: %w", err)
 }
