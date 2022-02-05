@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/suzuki-shunsuke/go-ci-env/v2/cienv/circleci"
+	"github.com/suzuki-shunsuke/go-ci-env/v2/cienv/cloudbuild"
 	"github.com/suzuki-shunsuke/go-ci-env/v2/cienv/codebuild"
 	"github.com/suzuki-shunsuke/go-ci-env/v2/cienv/drone"
 	actions "github.com/suzuki-shunsuke/go-ci-env/v2/cienv/github-actions"
@@ -52,6 +53,10 @@ func GetByName(name string) Platform {
 		return codebuild.Client{
 			Getenv: os.Getenv,
 		}
+	case "cloudbuild":
+		return cloudbuild.Client{
+			Getenv: os.Getenv,
+		}
 	}
 	return nil
 }
@@ -69,6 +74,9 @@ func get(getEnv func(string) string, read func(string) (io.ReadCloser, error)) P
 			Getenv: getEnv,
 		},
 		codebuild.Client{
+			Getenv: getEnv,
+		},
+		cloudbuild.Client{
 			Getenv: getEnv,
 		},
 	}

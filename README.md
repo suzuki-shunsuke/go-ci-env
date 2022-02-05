@@ -11,6 +11,7 @@ go-ci-env supports various CI platform and provides unified API to abstract the 
 
 * [AWS CodeBuild](https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-env-vars.html)
 * [CircleCI](https://circleci.com/docs/2.0/env-vars/#built-in-environment-variables)
+* [GCP Cloud Build](https://cloud.google.com/build/docs/configuring-builds/substitute-variable-values)
 * [Drone](https://docs.drone.io/pipeline/environment/reference/)
 * [GitHub Actions](https://docs.github.com/en/actions/configuring-and-managing-workflows/using-environment-variables#default-environment-variables)
 
