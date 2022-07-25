@@ -23,7 +23,7 @@ func NewCircleCI(param *Param) *CircleCI {
 	}
 }
 
-func (cc *CircleCI) CI() string {
+func (cc *CircleCI) ID() string {
 	return "circleci"
 }
 

@@ -5,7 +5,7 @@ import (
 )
 
 type Platform interface {
-	CI() string
+	ID() string
 	Match() bool
 	RepoOwner() string
 	RepoName() string
@@ -27,7 +27,7 @@ type Param struct {
 
 func Add(fn func(param *Param) Platform) {
 	p := fn(nil)
-	platformFuncs[p.CI()] = fn
+	platformFuncs[p.ID()] = fn
 }
 
 func Get(param *Param) Platform { //nolint:ireturn

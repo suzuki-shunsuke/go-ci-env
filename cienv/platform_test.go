@@ -13,9 +13,9 @@ func TestPlatform(t *testing.T) {
 		return
 	}
 
-	t.Run("Platform.CI", func(t *testing.T) {
+	t.Run("Platform.ID", func(t *testing.T) {
 		t.Parallel()
-		if platform.CI() == "" {
+		if platform.ID() == "" {
 			t.Error("platform.CI() is empty")
 		}
 	})

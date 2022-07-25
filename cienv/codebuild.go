@@ -22,7 +22,7 @@ func NewCodeBuild(param *Param) *CodeBuild {
 	}
 }
 
-func (cb *CodeBuild) CI() string {
+func (cb *CodeBuild) ID() string {
 	return "codebuild"
 }
 

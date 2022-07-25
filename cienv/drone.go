@@ -21,7 +21,7 @@ func NewDrone(param *Param) *Drone {
 	}
 }
 
-func (drone *Drone) CI() string {
+func (drone *Drone) ID() string {
 	return "drone"
 }
 
