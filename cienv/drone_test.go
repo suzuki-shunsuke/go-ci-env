@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/suzuki-shunsuke/go-ci-env/v2/cienv"
+	"github.com/suzuki-shunsuke/go-ci-env/v3/cienv"
 )
 
 func TestDrone_Match(t *testing.T) {

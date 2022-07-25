@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/suzuki-shunsuke/go-ci-env/v2/cienv"
+	"github.com/suzuki-shunsuke/go-ci-env/v3/cienv"
 )
 
 func TestCodeBuild_Match(t *testing.T) { //nolint:nosnakecase
