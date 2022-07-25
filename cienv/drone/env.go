@@ -2,55 +2,65 @@ package drone
 
 import (
 	"fmt"
+	"os"
 	"strconv"
 )
 
 type Client struct {
-	Getenv func(string) string
+	getenv func(string) string
 }
 
-func (client Client) CI() string {
+func New(getenv func(string) string) *Client {
+	if getenv == nil {
+		getenv = os.Getenv
+	}
+	return &Client{
+		getenv: getenv,
+	}
+}
+
+func (client *Client) CI() string {
 	return "drone"
 }
 
-func (client Client) Match() bool {
-	return client.Getenv("DRONE") != ""
+func (client *Client) Match() bool {
+	return client.getenv("DRONE") != ""
 }
 
-func (client Client) RepoOwner() string {
-	return client.Getenv("DRONE_REPO_OWNER")
+func (client *Client) RepoOwner() string {
+	return client.getenv("DRONE_REPO_OWNER")
 }
 
-func (client Client) RepoName() string {
-	return client.Getenv("DRONE_REPO_NAME")
+func (client *Client) RepoName() string {
+	return client.getenv("DRONE_REPO_NAME")
 }
 
-func (client Client) Ref() string {
-	return client.Getenv("DRONE_COMMIT_REF")
+func (client *Client) Ref() string {
+	return client.getenv("DRONE_COMMIT_REF")
 }
 
-func (client Client) Tag() string {
-	return client.Getenv("DRONE_TAG")
+func (client *Client) Tag() string {
+	return client.getenv("DRONE_TAG")
 }
 
-func (client Client) Branch() string {
-	return client.Getenv("DRONE_SOURCE_BRANCH")
+func (client *Client) Branch() string {
+	return client.getenv("DRONE_SOURCE_BRANCH")
 }
 
-func (client Client) PRBaseBranch() string {
-	return client.Getenv("DRONE_TARGET_BRANCH")
+func (client *Client) PRBaseBranch() string {
+	return client.getenv("DRONE_TARGET_BRANCH")
 }
 
-func (client Client) SHA() string {
-	return client.Getenv("DRONE_COMMIT_SHA")
+func (client *Client) SHA() string {
+	return client.getenv("DRONE_COMMIT_SHA")
 }
 
-func (client Client) IsPR() bool {
-	return client.Getenv("DRONE_PULL_REQUEST") != ""
+func (client *Client) IsPR() bool {
+	return client.getenv("DRONE_PULL_REQUEST") != ""
 }
 
-func (client Client) PRNumber() (int, error) {
-	pr := client.Getenv("DRONE_PULL_REQUEST")
+func (client *Client) PRNumber() (int, error) {
+	pr := client.getenv("DRONE_PULL_REQUEST")
 	if pr == "" {
 		return 0, nil
 	}

@@ -2,7 +2,6 @@ package cienv
 
 import (
 	"io"
-	"os"
 
 	"github.com/suzuki-shunsuke/go-ci-env/v2/cienv/circleci"
 	"github.com/suzuki-shunsuke/go-ci-env/v2/cienv/codebuild"
@@ -25,57 +24,38 @@ type Platform interface {
 	PRBaseBranch() string
 }
 
-func read(p string) (io.ReadCloser, error) {
-	return os.Open(p) //nolint:wrapcheck
+type Param struct {
+	Getenv func(string) string
+	Read   func(string) (io.ReadCloser, error)
 }
 
-func Get() Platform {
-	return get(os.Getenv, read)
+func Add(name string, fn func(param *Param) Platform) {
+	platformFuncs[name] = fn
 }
 
-func GetByName(name string) Platform {
-	switch name {
-	case "github-actions":
-		return actions.Client{
-			Read:   read,
-			Getenv: os.Getenv,
-		}
-	case "drone":
-		return drone.Client{
-			Getenv: os.Getenv,
-		}
-	case "circleci":
-		return circleci.Client{
-			Getenv: os.Getenv,
-		}
-	case "codebuild":
-		return codebuild.Client{
-			Getenv: os.Getenv,
-		}
-	}
-	return nil
-}
-
-func get(getEnv func(string) string, read func(string) (io.ReadCloser, error)) Platform {
-	platforms := []Platform{
-		actions.Client{
-			Read:   read,
-			Getenv: getEnv,
-		},
-		drone.Client{
-			Getenv: getEnv,
-		},
-		circleci.Client{
-			Getenv: getEnv,
-		},
-		codebuild.Client{
-			Getenv: getEnv,
-		},
-	}
-	for _, platform := range platforms {
+func Get(param *Param) Platform { //nolint:ireturn
+	for _, newPlatform := range platformFuncs {
+		platform := newPlatform(param)
 		if platform.Match() {
 			return platform
 		}
 	}
 	return nil
 }
+
+var platformFuncs = map[string]newPlatform{ //nolint:gochecknoglobals
+	"circleci": func(param *Param) Platform {
+		return circleci.New(param.Getenv)
+	},
+	"codebuild": func(param *Param) Platform {
+		return codebuild.New(param.Getenv)
+	},
+	"drone": func(param *Param) Platform {
+		return drone.New(param.Getenv)
+	},
+	"github-actions": func(param *Param) Platform {
+		return actions.New(param.Getenv, param.Read)
+	},
+}
+
+type newPlatform func(param *Param) Platform

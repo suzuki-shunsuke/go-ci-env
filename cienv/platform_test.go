@@ -8,7 +8,7 @@ import (
 
 func TestPlatform(t *testing.T) {
 	t.Parallel()
-	platform := cienv.Get()
+	platform := cienv.Get(nil)
 	if platform == nil {
 		return
 	}

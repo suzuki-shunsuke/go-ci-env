@@ -23,8 +23,8 @@ type Client struct {
 	renderFunc func(string) (string, error)
 }
 
-func New(param Param, render func(string) (string, error)) Client {
-	return Client{
+func New(param Param, render func(string) (string, error)) *Client {
+	return &Client{
 		param:      param,
 		renderFunc: render,
 	}

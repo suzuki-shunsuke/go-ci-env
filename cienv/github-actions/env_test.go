@@ -1,3 +1,4 @@
+//nolint:nosnakecase
 package actions_test
 
 import (
@@ -35,9 +36,7 @@ func TestClient_Match(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := actions.Client{
-				Getenv: newGetenv(d.m),
-			}
+			client := actions.New(newGetenv(d.m), nil)
 			if d.exp {
 				if !client.Match() {
 					t.Fatal("client.Match() = false, wanted true")
@@ -71,9 +70,7 @@ func TestClient_RepoOwner(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := actions.Client{
-				Getenv: newGetenv(d.m),
-			}
+			client := actions.New(newGetenv(d.m), nil)
 			owner := client.RepoOwner()
 			if owner != d.exp {
 				t.Fatal("client.RepoOwner() = " + owner + ", wanted " + d.exp)
@@ -103,9 +100,7 @@ func TestClient_RepoName(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := actions.Client{
-				Getenv: newGetenv(d.m),
-			}
+			client := actions.New(newGetenv(d.m), nil)
 			repo := client.RepoName()
 			if repo != d.exp {
 				t.Fatal("client.RepoName() = " + repo + ", wanted " + d.exp)
@@ -134,9 +129,7 @@ func TestClient_SHA(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := actions.Client{
-				Getenv: newGetenv(d.m),
-			}
+			client := actions.New(newGetenv(d.m), nil)
 			sha := client.SHA()
 			if sha != d.exp {
 				t.Fatal("client.SHA() = " + sha + ", wanted " + d.exp)
@@ -165,9 +158,7 @@ func TestClient_Branch(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := actions.Client{
-				Getenv: newGetenv(d.m),
-			}
+			client := actions.New(newGetenv(d.m), nil)
 			branch := client.Branch()
 			if branch != d.exp {
 				t.Fatal("client.Branch() = " + branch + ", wanted " + d.exp)
@@ -196,9 +187,7 @@ func TestClient_PRBaseBranch(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := actions.Client{
-				Getenv: newGetenv(d.m),
-			}
+			client := actions.New(newGetenv(d.m), nil)
 			branch := client.PRBaseBranch()
 			if branch != d.exp {
 				t.Fatal("client.PRBaseBranch() = " + branch + ", wanted " + d.exp)
@@ -233,9 +222,7 @@ func TestClient_IsPR(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := actions.Client{
-				Getenv: newGetenv(d.m),
-			}
+			client := actions.New(newGetenv(d.m), nil)
 			if d.exp {
 				if !client.IsPR() {
 					t.Fatal("client.IsPR() = false, wanted true")

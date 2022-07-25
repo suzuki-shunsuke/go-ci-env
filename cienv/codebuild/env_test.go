@@ -13,7 +13,7 @@ func newGetenv(m map[string]string) func(string) string {
 	}
 }
 
-func TestClient_Match(t *testing.T) {
+func TestClient_Match(t *testing.T) { //nolint:nosnakecase
 	t.Parallel()
 	data := []struct {
 		title string
@@ -43,9 +43,7 @@ func TestClient_Match(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := codebuild.Client{
-				Getenv: newGetenv(d.m),
-			}
+			client := codebuild.New(newGetenv(d.m))
 			if d.exp {
 				if !client.Match() {
 					t.Fatal("client.Match() = false, wanted true")
@@ -59,7 +57,7 @@ func TestClient_Match(t *testing.T) {
 	}
 }
 
-func TestClient_RepoOwner(t *testing.T) {
+func TestClient_RepoOwner(t *testing.T) { //nolint:nosnakecase
 	t.Parallel()
 	data := []struct {
 		title string
@@ -79,9 +77,7 @@ func TestClient_RepoOwner(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := codebuild.Client{
-				Getenv: newGetenv(d.m),
-			}
+			client := codebuild.New(newGetenv(d.m))
 			owner := client.RepoOwner()
 			if owner != d.exp {
 				t.Fatal("client.RepoOwner() = " + owner + ", wanted " + d.exp)
@@ -90,7 +86,7 @@ func TestClient_RepoOwner(t *testing.T) {
 	}
 }
 
-func TestClient_RepoName(t *testing.T) {
+func TestClient_RepoName(t *testing.T) { //nolint:nosnakecase
 	t.Parallel()
 	data := []struct {
 		title string
@@ -110,9 +106,7 @@ func TestClient_RepoName(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := codebuild.Client{
-				Getenv: newGetenv(d.m),
-			}
+			client := codebuild.New(newGetenv(d.m))
 			repo := client.RepoName()
 			if repo != d.exp {
 				t.Fatal("client.RepoName() = " + repo + ", wanted " + d.exp)
@@ -121,7 +115,7 @@ func TestClient_RepoName(t *testing.T) {
 	}
 }
 
-func TestClient_SHA(t *testing.T) {
+func TestClient_SHA(t *testing.T) { //nolint:nosnakecase
 	t.Parallel()
 	data := []struct {
 		title string
@@ -141,9 +135,7 @@ func TestClient_SHA(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := codebuild.Client{
-				Getenv: newGetenv(d.m),
-			}
+			client := codebuild.New(newGetenv(d.m))
 			sha := client.SHA()
 			if sha != d.exp {
 				t.Fatal("client.SHA() = " + sha + ", wanted " + d.exp)
@@ -152,7 +144,7 @@ func TestClient_SHA(t *testing.T) {
 	}
 }
 
-func TestClient_Branch(t *testing.T) {
+func TestClient_Branch(t *testing.T) { //nolint:nosnakecase
 	t.Parallel()
 	data := []struct {
 		title string
@@ -172,9 +164,7 @@ func TestClient_Branch(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := codebuild.Client{
-				Getenv: newGetenv(d.m),
-			}
+			client := codebuild.New(newGetenv(d.m))
 			branch := client.Branch()
 			if branch != d.exp {
 				t.Fatal("client.Branch() = " + branch + ", wanted " + d.exp)
@@ -183,7 +173,7 @@ func TestClient_Branch(t *testing.T) {
 	}
 }
 
-func TestClient_PRBaseBranch(t *testing.T) {
+func TestClient_PRBaseBranch(t *testing.T) { //nolint:nosnakecase
 	t.Parallel()
 	data := []struct {
 		title string
@@ -203,9 +193,7 @@ func TestClient_PRBaseBranch(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := codebuild.Client{
-				Getenv: newGetenv(d.m),
-			}
+			client := codebuild.New(newGetenv(d.m))
 			branch := client.PRBaseBranch()
 			if branch != d.exp {
 				t.Fatal("client.PRBaseBranch() = " + branch + ", wanted " + d.exp)
@@ -214,7 +202,7 @@ func TestClient_PRBaseBranch(t *testing.T) {
 	}
 }
 
-func TestClient_IsPR(t *testing.T) {
+func TestClient_IsPR(t *testing.T) { //nolint:nosnakecase
 	t.Parallel()
 	data := []struct {
 		title string
@@ -240,9 +228,7 @@ func TestClient_IsPR(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := codebuild.Client{
-				Getenv: newGetenv(d.m),
-			}
+			client := codebuild.New(newGetenv(d.m))
 			if d.exp {
 				if !client.IsPR() {
 					t.Fatal("client.IsPR() = false, wanted true")
@@ -256,7 +242,7 @@ func TestClient_IsPR(t *testing.T) {
 	}
 }
 
-func TestClient_PRNumber(t *testing.T) {
+func TestClient_PRNumber(t *testing.T) { //nolint:nosnakecase
 	t.Parallel()
 	data := []struct {
 		title string
@@ -292,9 +278,7 @@ func TestClient_PRNumber(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := codebuild.Client{
-				Getenv: newGetenv(d.m),
-			}
+			client := codebuild.New(newGetenv(d.m))
 			num, err := client.PRNumber()
 			if d.isErr {
 				if err == nil {

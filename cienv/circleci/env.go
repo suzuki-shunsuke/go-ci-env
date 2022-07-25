@@ -3,56 +3,66 @@ package circleci
 import (
 	"errors"
 	"fmt"
+	"os"
 	"strconv"
 	"strings"
 )
 
 type Client struct {
-	Getenv func(string) string
+	getenv func(string) string
 }
 
-func (client Client) CI() string {
+func New(getenv func(string) string) *Client {
+	if getenv == nil {
+		getenv = os.Getenv
+	}
+	return &Client{
+		getenv: getenv,
+	}
+}
+
+func (client *Client) CI() string {
 	return "circleci"
 }
 
-func (client Client) Match() bool {
-	return client.Getenv("CIRCLECI") != ""
+func (client *Client) Match() bool {
+	return client.getenv("CIRCLECI") != ""
 }
 
-func (client Client) RepoOwner() string {
-	return client.Getenv("CIRCLE_PROJECT_USERNAME")
+func (client *Client) RepoOwner() string {
+	return client.getenv("CIRCLE_PROJECT_USERNAME")
 }
 
-func (client Client) RepoName() string {
-	return client.Getenv("CIRCLE_PROJECT_REPONAME")
+func (client *Client) RepoName() string {
+	return client.getenv("CIRCLE_PROJECT_REPONAME")
 }
 
-func (client Client) SHA() string {
-	return client.Getenv("CIRCLE_SHA1")
+func (client *Client) SHA() string {
+	return client.getenv("CIRCLE_SHA1")
 }
 
-func (client Client) Ref() string {
+func (client *Client) Ref() string {
 	return ""
 }
 
-func (client Client) Branch() string {
-	return client.Getenv("CIRCLE_BRANCH")
+func (client *Client) Branch() string {
+	return client.getenv("CIRCLE_BRANCH")
 }
 
-func (client Client) PRBaseBranch() string {
+func (client *Client) PRBaseBranch() string {
 	return ""
 }
 
-func (client Client) Tag() string {
-	return client.Getenv("CIRCLE_TAG")
+func (client *Client) Tag() string {
+	return client.getenv("CIRCLE_TAG")
 }
 
-func (client Client) IsPR() bool {
-	return client.Getenv("CIRCLE_PULL_REQUEST") != ""
+func (client *Client) IsPR() bool {
+	return client.getenv("CIRCLE_PULL_REQUEST") != ""
 }
 
-func (client Client) PRNumber() (int, error) {
-	pr := client.Getenv("CIRCLE_PULL_REQUEST")
+func (client *Client) PRNumber() (int, error) {
+	pr := client.getenv("CIRCLE_PULL_REQUEST")
 	if pr == "" {
 		return 0, nil
 	}

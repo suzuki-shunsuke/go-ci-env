@@ -1,3 +1,4 @@
+//nolint:nosnakecase
 package generic_test
 
 import (
