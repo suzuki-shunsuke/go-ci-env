@@ -1,9 +1,10 @@
-package actions_test
+package cienv_test
 
 import (
+	"strconv"
 	"testing"
 
-	actions "github.com/suzuki-shunsuke/go-ci-env/v2/cienv/github-actions"
+	"github.com/suzuki-shunsuke/go-ci-env/v3/cienv"
 )
 
 func newGetenv(m map[string]string) func(string) string {
@@ -12,7 +13,7 @@ func newGetenv(m map[string]string) func(string) string {
 	}
 }
 
-func TestClient_Match(t *testing.T) {
+func TestClient_Match(t *testing.T) { //nolint:nosnakecase
 	t.Parallel()
 	data := []struct {
 		title string
@@ -22,7 +23,7 @@ func TestClient_Match(t *testing.T) {
 		{
 			title: "true",
 			m: map[string]string{
-				"GITHUB_ACTIONS": "true",
+				"CIRCLECI": "true",
 			},
 			exp: true,
 		},
@@ -35,9 +36,9 @@ func TestClient_Match(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := actions.Client{
+			client := cienv.NewCircleCI(&cienv.Param{
 				Getenv: newGetenv(d.m),
-			}
+			})
 			if d.exp {
 				if !client.Match() {
 					t.Fatal("client.Match() = false, wanted true")
@@ -51,7 +52,7 @@ func TestClient_Match(t *testing.T) {
 	}
 }
 
-func TestClient_RepoOwner(t *testing.T) {
+func TestClient_RepoOwner(t *testing.T) { //nolint:nosnakecase
 	t.Parallel()
 	data := []struct {
 		title string
@@ -61,8 +62,8 @@ func TestClient_RepoOwner(t *testing.T) {
 		{
 			title: "true",
 			m: map[string]string{
-				"GITHUB_ACTIONS":          "true",
-				"GITHUB_REPOSITORY_OWNER": "suzuki-shunsuke",
+				"CIRCLECI":                "true",
+				"CIRCLE_PROJECT_USERNAME": "suzuki-shunsuke",
 			},
 			exp: "suzuki-shunsuke",
 		},
@@ -71,9 +72,9 @@ func TestClient_RepoOwner(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := actions.Client{
+			client := cienv.NewCircleCI(&cienv.Param{
 				Getenv: newGetenv(d.m),
-			}
+			})
 			owner := client.RepoOwner()
 			if owner != d.exp {
 				t.Fatal("client.RepoOwner() = " + owner + ", wanted " + d.exp)
@@ -82,7 +83,7 @@ func TestClient_RepoOwner(t *testing.T) {
 	}
 }
 
-func TestClient_RepoName(t *testing.T) {
+func TestClient_RepoName(t *testing.T) { //nolint:nosnakecase
 	t.Parallel()
 	data := []struct {
 		title string
@@ -92,9 +93,8 @@ func TestClient_RepoName(t *testing.T) {
 		{
 			title: "true",
 			m: map[string]string{
-				"GITHUB_ACTIONS":          "true",
-				"GITHUB_REPOSITORY_OWNER": "suzuki-shunsuke",
-				"GITHUB_REPOSITORY":       "suzuki-shunsuke/go-ci-env",
+				"CIRCLECI":                "true",
+				"CIRCLE_PROJECT_REPONAME": "go-ci-env",
 			},
 			exp: "go-ci-env",
 		},
@@ -103,9 +103,9 @@ func TestClient_RepoName(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := actions.Client{
+			client := cienv.NewCircleCI(&cienv.Param{
 				Getenv: newGetenv(d.m),
-			}
+			})
 			repo := client.RepoName()
 			if repo != d.exp {
 				t.Fatal("client.RepoName() = " + repo + ", wanted " + d.exp)
@@ -114,7 +114,7 @@ func TestClient_RepoName(t *testing.T) {
 	}
 }
 
-func TestClient_SHA(t *testing.T) {
+func TestClient_SHA(t *testing.T) { //nolint:nosnakecase
 	t.Parallel()
 	data := []struct {
 		title string
@@ -124,8 +124,8 @@ func TestClient_SHA(t *testing.T) {
 		{
 			title: "true",
 			m: map[string]string{
-				"GITHUB_ACTIONS": "true",
-				"GITHUB_SHA":     "c0c29ca335f2987583c9ecf077e4b476ca78b660",
+				"CIRCLECI":    "true",
+				"CIRCLE_SHA1": "c0c29ca335f2987583c9ecf077e4b476ca78b660",
 			},
 			exp: "c0c29ca335f2987583c9ecf077e4b476ca78b660",
 		},
@@ -134,9 +134,9 @@ func TestClient_SHA(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := actions.Client{
+			client := cienv.NewCircleCI(&cienv.Param{
 				Getenv: newGetenv(d.m),
-			}
+			})
 			sha := client.SHA()
 			if sha != d.exp {
 				t.Fatal("client.SHA() = " + sha + ", wanted " + d.exp)
@@ -145,7 +145,7 @@ func TestClient_SHA(t *testing.T) {
 	}
 }
 
-func TestClient_Branch(t *testing.T) {
+func TestClient_Branch(t *testing.T) { //nolint:nosnakecase
 	t.Parallel()
 	data := []struct {
 		title string
@@ -155,8 +155,8 @@ func TestClient_Branch(t *testing.T) {
 		{
 			title: "true",
 			m: map[string]string{
-				"GITHUB_ACTIONS": "true",
-				"GITHUB_REF":     "refs/heads/test",
+				"CIRCLECI":      "true",
+				"CIRCLE_BRANCH": "test",
 			},
 			exp: "test",
 		},
@@ -165,9 +165,9 @@ func TestClient_Branch(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := actions.Client{
+			client := cienv.NewCircleCI(&cienv.Param{
 				Getenv: newGetenv(d.m),
-			}
+			})
 			branch := client.Branch()
 			if branch != d.exp {
 				t.Fatal("client.Branch() = " + branch + ", wanted " + d.exp)
@@ -176,7 +176,7 @@ func TestClient_Branch(t *testing.T) {
 	}
 }
 
-func TestClient_PRBaseBranch(t *testing.T) {
+func TestClient_Tag(t *testing.T) { //nolint:nosnakecase
 	t.Parallel()
 	data := []struct {
 		title string
@@ -186,8 +186,8 @@ func TestClient_PRBaseBranch(t *testing.T) {
 		{
 			title: "true",
 			m: map[string]string{
-				"GITHUB_ACTIONS":  "true",
-				"GITHUB_BASE_REF": "refs/heads/test",
+				"CIRCLECI":   "true",
+				"CIRCLE_TAG": "test",
 			},
 			exp: "test",
 		},
@@ -196,18 +196,18 @@ func TestClient_PRBaseBranch(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := actions.Client{
+			client := cienv.NewCircleCI(&cienv.Param{
 				Getenv: newGetenv(d.m),
-			}
-			branch := client.PRBaseBranch()
-			if branch != d.exp {
-				t.Fatal("client.PRBaseBranch() = " + branch + ", wanted " + d.exp)
+			})
+			tag := client.Tag()
+			if tag != d.exp {
+				t.Fatal("client.Tag() = " + tag + ", wanted " + d.exp)
 			}
 		})
 	}
 }
 
-func TestClient_IsPR(t *testing.T) {
+func TestClient_IsPR(t *testing.T) { //nolint:nosnakecase
 	t.Parallel()
 	data := []struct {
 		title string
@@ -217,15 +217,15 @@ func TestClient_IsPR(t *testing.T) {
 		{
 			title: "true",
 			m: map[string]string{
-				"GITHUB_ACTIONS":    "true",
-				"GITHUB_EVENT_NAME": "pull_request",
+				"CIRCLECI":            "true",
+				"CIRCLE_PULL_REQUEST": "https://github.com/suzuki-shunsuke/go-ci-env/pull/1",
 			},
 			exp: true,
 		},
 		{
 			title: "false",
 			m: map[string]string{
-				"GITHUB_ACTIONS": "true",
+				"CIRCLECI": "true",
 			},
 		},
 	}
@@ -233,9 +233,9 @@ func TestClient_IsPR(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := actions.Client{
+			client := cienv.NewCircleCI(&cienv.Param{
 				Getenv: newGetenv(d.m),
-			}
+			})
 			if d.exp {
 				if !client.IsPR() {
 					t.Fatal("client.IsPR() = false, wanted true")
@@ -244,6 +244,62 @@ func TestClient_IsPR(t *testing.T) {
 			}
 			if client.IsPR() {
 				t.Fatal("client.IsPR() = true, wanted false")
+			}
+		})
+	}
+}
+
+func TestClient_PRNumber(t *testing.T) { //nolint:nosnakecase,dupl
+	t.Parallel()
+	data := []struct {
+		title string
+		m     map[string]string
+		exp   int
+		isErr bool
+	}{
+		{
+			title: "true",
+			m: map[string]string{
+				"CIRCLECI":            "true",
+				"CIRCLE_PULL_REQUEST": "https://github.com/suzuki-shunsuke/go-ci-env/pull/1",
+			},
+			exp: 1,
+		},
+		{
+			title: "not pull request",
+			m: map[string]string{
+				"CIRCLECI": "true",
+			},
+			exp: 0,
+		},
+		{
+			title: "invalid pull request",
+			m: map[string]string{
+				"CIRCLECI":            "true",
+				"CIRCLE_PULL_REQUEST": "hello",
+			},
+			isErr: true,
+		},
+	}
+	for _, d := range data {
+		d := d
+		t.Run(d.title, func(t *testing.T) {
+			t.Parallel()
+			client := cienv.NewCircleCI(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
+			num, err := client.PRNumber()
+			if d.isErr {
+				if err == nil {
+					t.Fatal("client.PRNumber() should return an error")
+				}
+				return
+			}
+			if err != nil {
+				t.Fatal(err)
+			}
+			if num != d.exp {
+				t.Fatal("client.PRNumber() = " + strconv.Itoa(num) + ", wanted " + strconv.Itoa(d.exp))
 			}
 		})
 	}

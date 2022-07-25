@@ -14,3 +14,5 @@ linters:
     - godot
     - godox
     - exhaustivestruct
+    - exhaustruct
+    - varnamelen
