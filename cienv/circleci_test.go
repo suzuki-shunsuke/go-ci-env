@@ -36,7 +36,9 @@ func TestClient_Match(t *testing.T) { //nolint:nosnakecase
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := cienv.NewCircleCI(newGetenv(d.m))
+			client := cienv.NewCircleCI(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
 			if d.exp {
 				if !client.Match() {
 					t.Fatal("client.Match() = false, wanted true")
@@ -70,7 +72,9 @@ func TestClient_RepoOwner(t *testing.T) { //nolint:nosnakecase
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := cienv.NewCircleCI(newGetenv(d.m))
+			client := cienv.NewCircleCI(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
 			owner := client.RepoOwner()
 			if owner != d.exp {
 				t.Fatal("client.RepoOwner() = " + owner + ", wanted " + d.exp)
@@ -99,7 +103,9 @@ func TestClient_RepoName(t *testing.T) { //nolint:nosnakecase
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := cienv.NewCircleCI(newGetenv(d.m))
+			client := cienv.NewCircleCI(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
 			repo := client.RepoName()
 			if repo != d.exp {
 				t.Fatal("client.RepoName() = " + repo + ", wanted " + d.exp)
@@ -128,7 +134,9 @@ func TestClient_SHA(t *testing.T) { //nolint:nosnakecase
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := cienv.NewCircleCI(newGetenv(d.m))
+			client := cienv.NewCircleCI(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
 			sha := client.SHA()
 			if sha != d.exp {
 				t.Fatal("client.SHA() = " + sha + ", wanted " + d.exp)
@@ -157,7 +165,9 @@ func TestClient_Branch(t *testing.T) { //nolint:nosnakecase
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := cienv.NewCircleCI(newGetenv(d.m))
+			client := cienv.NewCircleCI(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
 			branch := client.Branch()
 			if branch != d.exp {
 				t.Fatal("client.Branch() = " + branch + ", wanted " + d.exp)
@@ -186,7 +196,9 @@ func TestClient_Tag(t *testing.T) { //nolint:nosnakecase
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := cienv.NewCircleCI(newGetenv(d.m))
+			client := cienv.NewCircleCI(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
 			tag := client.Tag()
 			if tag != d.exp {
 				t.Fatal("client.Tag() = " + tag + ", wanted " + d.exp)
@@ -221,7 +233,9 @@ func TestClient_IsPR(t *testing.T) { //nolint:nosnakecase
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := cienv.NewCircleCI(newGetenv(d.m))
+			client := cienv.NewCircleCI(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
 			if d.exp {
 				if !client.IsPR() {
 					t.Fatal("client.IsPR() = false, wanted true")
@@ -271,7 +285,9 @@ func TestClient_PRNumber(t *testing.T) { //nolint:nosnakecase,dupl
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := cienv.NewCircleCI(newGetenv(d.m))
+			client := cienv.NewCircleCI(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
 			num, err := client.PRNumber()
 			if d.isErr {
 				if err == nil {

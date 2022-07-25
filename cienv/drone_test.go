@@ -31,7 +31,9 @@ func TestDrone_Match(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := cienv.NewDrone(newGetenv(d.m))
+			client := cienv.NewDrone(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
 			if d.exp {
 				if !client.Match() {
 					t.Fatal("client.Match() = false, wanted true")
@@ -65,7 +67,9 @@ func TestDrone_RepoOwner(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := cienv.NewDrone(newGetenv(d.m))
+			client := cienv.NewDrone(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
 			owner := client.RepoOwner()
 			if owner != d.exp {
 				t.Fatal("client.RepoOwner() = " + owner + ", wanted " + d.exp)
@@ -94,7 +98,9 @@ func TestDrone_RepoName(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := cienv.NewDrone(newGetenv(d.m))
+			client := cienv.NewDrone(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
 			repo := client.RepoName()
 			if repo != d.exp {
 				t.Fatal("client.RepoName() = " + repo + ", wanted " + d.exp)
@@ -123,7 +129,9 @@ func TestDrone_SHA(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := cienv.NewDrone(newGetenv(d.m))
+			client := cienv.NewDrone(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
 			sha := client.SHA()
 			if sha != d.exp {
 				t.Fatal("client.SHA() = " + sha + ", wanted " + d.exp)
@@ -152,7 +160,9 @@ func TestDrone_Branch(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := cienv.NewDrone(newGetenv(d.m))
+			client := cienv.NewDrone(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
 			branch := client.Branch()
 			if branch != d.exp {
 				t.Fatal("client.Branch() = " + branch + ", wanted " + d.exp)
@@ -181,7 +191,9 @@ func TestDrone_PRBaseBranch(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := cienv.NewDrone(newGetenv(d.m))
+			client := cienv.NewDrone(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
 			branch := client.PRBaseBranch()
 			if branch != d.exp {
 				t.Fatal("client.PRBaseBranch() = " + branch + ", wanted " + d.exp)
@@ -210,7 +222,9 @@ func TestDrone_Tag(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := cienv.NewDrone(newGetenv(d.m))
+			client := cienv.NewDrone(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
 			tag := client.Tag()
 			if tag != d.exp {
 				t.Fatal("client.Tag() = " + tag + ", wanted " + d.exp)
@@ -245,7 +259,9 @@ func TestDrone_IsPR(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := cienv.NewDrone(newGetenv(d.m))
+			client := cienv.NewDrone(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
 			if d.exp {
 				if !client.IsPR() {
 					t.Fatal("client.IsPR() = false, wanted true")
@@ -295,7 +311,9 @@ func TestDrone_PRNumber(t *testing.T) { //nolint:dupl
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := cienv.NewDrone(newGetenv(d.m))
+			client := cienv.NewDrone(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
 			num, err := client.PRNumber()
 			if d.isErr {
 				if err == nil {

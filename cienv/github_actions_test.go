@@ -30,7 +30,9 @@ func TestGitHubActions_Match(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := cienv.NewGitHubActions(newGetenv(d.m), nil)
+			client := cienv.NewGitHubActions(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
 			if d.exp {
 				if !client.Match() {
 					t.Fatal("client.Match() = false, wanted true")
@@ -64,7 +66,9 @@ func TestGitHubActions_RepoOwner(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := cienv.NewGitHubActions(newGetenv(d.m), nil)
+			client := cienv.NewGitHubActions(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
 			owner := client.RepoOwner()
 			if owner != d.exp {
 				t.Fatal("client.RepoOwner() = " + owner + ", wanted " + d.exp)
@@ -94,7 +98,9 @@ func TestGitHubActions_RepoName(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := cienv.NewGitHubActions(newGetenv(d.m), nil)
+			client := cienv.NewGitHubActions(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
 			repo := client.RepoName()
 			if repo != d.exp {
 				t.Fatal("client.RepoName() = " + repo + ", wanted " + d.exp)
@@ -123,7 +129,9 @@ func TestGitHubActions_SHA(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := cienv.NewGitHubActions(newGetenv(d.m), nil)
+			client := cienv.NewGitHubActions(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
 			sha := client.SHA()
 			if sha != d.exp {
 				t.Fatal("client.SHA() = " + sha + ", wanted " + d.exp)
@@ -152,7 +160,9 @@ func TestGitHubActions_Branch(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := cienv.NewGitHubActions(newGetenv(d.m), nil)
+			client := cienv.NewGitHubActions(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
 			branch := client.Branch()
 			if branch != d.exp {
 				t.Fatal("client.Branch() = " + branch + ", wanted " + d.exp)
@@ -181,7 +191,9 @@ func TestGitHubActions_PRBaseBranch(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := cienv.NewGitHubActions(newGetenv(d.m), nil)
+			client := cienv.NewGitHubActions(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
 			branch := client.PRBaseBranch()
 			if branch != d.exp {
 				t.Fatal("client.PRBaseBranch() = " + branch + ", wanted " + d.exp)
@@ -216,7 +228,9 @@ func TestGitHubActions_IsPR(t *testing.T) {
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := cienv.NewGitHubActions(newGetenv(d.m), nil)
+			client := cienv.NewGitHubActions(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
 			if d.exp {
 				if !client.IsPR() {
 					t.Fatal("client.IsPR() = false, wanted true")

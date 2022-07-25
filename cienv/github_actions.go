@@ -19,19 +19,24 @@ type GitHubActions struct {
 	getenv func(string) string
 }
 
-func NewGitHubActions(getenv func(string) string, read func(string) (io.ReadCloser, error)) *GitHubActions {
-	if getenv == nil {
-		getenv = os.Getenv
-	}
-	if read == nil {
-		read = func(p string) (io.ReadCloser, error) {
-			f, err := os.Open(p)
-			return f, err //nolint:wrapcheck
+func read(p string) (io.ReadCloser, error) {
+	return os.Open(p) //nolint:wrapcheck
+}
+
+func NewGitHubActions(param *Param) *GitHubActions {
+	getenv := os.Getenv
+	readFunc := read
+	if param != nil {
+		if param.Getenv != nil {
+			getenv = param.Getenv
+		}
+		if param.Read != nil {
+			readFunc = param.Read
 		}
 	}
 	return &GitHubActions{
 		getenv: getenv,
-		read:   read,
+		read:   readFunc,
 	}
 }
 

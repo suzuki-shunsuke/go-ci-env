@@ -40,16 +40,16 @@ func Get(param *Param) Platform { //nolint:ireturn
 
 var platformFuncs = map[string]newPlatform{ //nolint:gochecknoglobals
 	"circleci": func(param *Param) Platform {
-		return NewCircleCI(param.Getenv)
+		return NewCircleCI(param)
 	},
 	"codebuild": func(param *Param) Platform {
-		return NewCodeBuild(param.Getenv)
+		return NewCodeBuild(param)
 	},
 	"drone": func(param *Param) Platform {
-		return NewDrone(param.Getenv)
+		return NewDrone(param)
 	},
 	"github-actions": func(param *Param) Platform {
-		return NewGitHubActions(param.Getenv, param.Read)
+		return NewGitHubActions(param)
 	},
 }
 

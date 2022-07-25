@@ -37,7 +37,9 @@ func TestCodeBuild_Match(t *testing.T) { //nolint:nosnakecase
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := cienv.NewCodeBuild(newGetenv(d.m))
+			client := cienv.NewCodeBuild(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
 			if d.exp {
 				if !client.Match() {
 					t.Fatal("client.Match() = false, wanted true")
@@ -71,7 +73,9 @@ func TestCodeBuild_RepoOwner(t *testing.T) { //nolint:nosnakecase
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := cienv.NewCodeBuild(newGetenv(d.m))
+			client := cienv.NewCodeBuild(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
 			owner := client.RepoOwner()
 			if owner != d.exp {
 				t.Fatal("client.RepoOwner() = " + owner + ", wanted " + d.exp)
@@ -100,7 +104,9 @@ func TestCodeBuild_RepoName(t *testing.T) { //nolint:nosnakecase
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := cienv.NewCodeBuild(newGetenv(d.m))
+			client := cienv.NewCodeBuild(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
 			repo := client.RepoName()
 			if repo != d.exp {
 				t.Fatal("client.RepoName() = " + repo + ", wanted " + d.exp)
@@ -129,7 +135,9 @@ func TestCodeBuild_SHA(t *testing.T) { //nolint:nosnakecase
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := cienv.NewCodeBuild(newGetenv(d.m))
+			client := cienv.NewCodeBuild(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
 			sha := client.SHA()
 			if sha != d.exp {
 				t.Fatal("client.SHA() = " + sha + ", wanted " + d.exp)
@@ -158,7 +166,9 @@ func TestCodeBuild_Branch(t *testing.T) { //nolint:nosnakecase
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := cienv.NewCodeBuild(newGetenv(d.m))
+			client := cienv.NewCodeBuild(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
 			branch := client.Branch()
 			if branch != d.exp {
 				t.Fatal("client.Branch() = " + branch + ", wanted " + d.exp)
@@ -187,7 +197,9 @@ func TestCodeBuild_PRBaseBranch(t *testing.T) { //nolint:nosnakecase
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := cienv.NewCodeBuild(newGetenv(d.m))
+			client := cienv.NewCodeBuild(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
 			branch := client.PRBaseBranch()
 			if branch != d.exp {
 				t.Fatal("client.PRBaseBranch() = " + branch + ", wanted " + d.exp)
@@ -222,7 +234,9 @@ func TestCodeBuild_IsPR(t *testing.T) { //nolint:nosnakecase
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := cienv.NewCodeBuild(newGetenv(d.m))
+			client := cienv.NewCodeBuild(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
 			if d.exp {
 				if !client.IsPR() {
 					t.Fatal("client.IsPR() = false, wanted true")
@@ -272,7 +286,9 @@ func TestCodeBuild_PRNumber(t *testing.T) { //nolint:nosnakecase,dupl
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := cienv.NewCodeBuild(newGetenv(d.m))
+			client := cienv.NewCodeBuild(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
 			num, err := client.PRNumber()
 			if d.isErr {
 				if err == nil {

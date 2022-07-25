@@ -12,12 +12,14 @@ type CircleCI struct {
 	getenv func(string) string
 }
 
-func NewCircleCI(getenv func(string) string) *CircleCI {
-	if getenv == nil {
-		getenv = os.Getenv
+func NewCircleCI(param *Param) *CircleCI {
+	if param == nil || param.Getenv == nil {
+		return &CircleCI{
+			getenv: os.Getenv,
+		}
 	}
 	return &CircleCI{
-		getenv: getenv,
+		getenv: param.Getenv,
 	}
 }
 

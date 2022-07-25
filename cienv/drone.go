@@ -10,12 +10,14 @@ type Drone struct {
 	getenv func(string) string
 }
 
-func NewDrone(getenv func(string) string) *Drone {
-	if getenv == nil {
-		getenv = os.Getenv
+func NewDrone(param *Param) *Drone {
+	if param == nil || param.Getenv == nil {
+		return &Drone{
+			getenv: os.Getenv,
+		}
 	}
 	return &Drone{
-		getenv: getenv,
+		getenv: param.Getenv,
 	}
 }
 
