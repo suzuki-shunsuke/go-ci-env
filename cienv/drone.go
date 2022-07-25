@@ -72,3 +72,12 @@ func (drone *Drone) PRNumber() (int, error) {
 	}
 	return 0, fmt.Errorf("DRONE_PULL_REQUEST is invalid. It failed to parse DRONE_PULL_REQUEST as an integer: %w", err)
 }
+
+func (drone *Drone) JobURL() string {
+	return fmt.Sprintf(
+		"%s/%s/%s",
+		drone.getenv("DRONE_BUILD_LINK"),
+		drone.getenv("DRONE_STAGE_NUMBER"),
+		drone.getenv("DRONE_STEP_NUMBER"),
+	)
+}

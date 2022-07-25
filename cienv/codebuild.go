@@ -89,3 +89,7 @@ func (cb *CodeBuild) PRNumber() (int, error) {
 	}
 	return 0, fmt.Errorf("CODEBUILD_SOURCE_VERSION is invalid. It failed to parse CODEBUILD_SOURCE_VERSION as an integer: %w", err)
 }
+
+func (cb *CodeBuild) JobURL() string {
+	return cb.getenv("CODEBUILD_BUILD_URL")
+}

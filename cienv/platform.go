@@ -17,6 +17,7 @@ type Platform interface {
 	// PRNumber returns 0 if it isn't a pull request
 	PRNumber() (int, error)
 	PRBaseBranch() string
+	JobURL() string
 }
 
 type Param struct {
@@ -24,8 +25,9 @@ type Param struct {
 	Read   func(string) (io.ReadCloser, error)
 }
 
-func Add(name string, fn func(param *Param) Platform) {
-	platformFuncs[name] = fn
+func Add(fn func(param *Param) Platform) {
+	p := fn(nil)
+	platformFuncs[p.CI()] = fn
 }
 
 func Get(param *Param) Platform { //nolint:ireturn

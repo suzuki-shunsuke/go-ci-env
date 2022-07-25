@@ -79,3 +79,7 @@ func (cc *CircleCI) PRNumber() (int, error) {
 	}
 	return 0, fmt.Errorf("failed to extract a pull request number from the environment variable CIRCLE_PULL_REQUEST: %w", err)
 }
+
+func (cc *CircleCI) JobURL() string {
+	return cc.getenv("CIRCLE_BUILD_URL")
+}
