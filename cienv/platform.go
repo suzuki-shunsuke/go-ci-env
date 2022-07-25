@@ -2,11 +2,6 @@ package cienv
 
 import (
 	"io"
-
-	"github.com/suzuki-shunsuke/go-ci-env/v2/cienv/circleci"
-	"github.com/suzuki-shunsuke/go-ci-env/v2/cienv/codebuild"
-	"github.com/suzuki-shunsuke/go-ci-env/v2/cienv/drone"
-	actions "github.com/suzuki-shunsuke/go-ci-env/v2/cienv/github-actions"
 )
 
 type Platform interface {
@@ -45,16 +40,16 @@ func Get(param *Param) Platform { //nolint:ireturn
 
 var platformFuncs = map[string]newPlatform{ //nolint:gochecknoglobals
 	"circleci": func(param *Param) Platform {
-		return circleci.New(param.Getenv)
+		return NewCircleCI(param.Getenv)
 	},
 	"codebuild": func(param *Param) Platform {
-		return codebuild.New(param.Getenv)
+		return NewCodeBuild(param.Getenv)
 	},
 	"drone": func(param *Param) Platform {
-		return drone.New(param.Getenv)
+		return NewDrone(param.Getenv)
 	},
 	"github-actions": func(param *Param) Platform {
-		return actions.New(param.Getenv, param.Read)
+		return NewGitHubActions(param.Getenv, param.Read)
 	},
 }
 

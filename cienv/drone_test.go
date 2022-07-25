@@ -1,19 +1,14 @@
-package codebuild_test
+//nolint:nosnakecase
+package cienv_test
 
 import (
 	"strconv"
 	"testing"
 
-	"github.com/suzuki-shunsuke/go-ci-env/v2/cienv/codebuild"
+	"github.com/suzuki-shunsuke/go-ci-env/v2/cienv"
 )
 
-func newGetenv(m map[string]string) func(string) string {
-	return func(k string) string {
-		return m[k]
-	}
-}
-
-func TestClient_Match(t *testing.T) { //nolint:nosnakecase
+func TestDrone_Match(t *testing.T) {
 	t.Parallel()
 	data := []struct {
 		title string
@@ -23,14 +18,7 @@ func TestClient_Match(t *testing.T) { //nolint:nosnakecase
 		{
 			title: "true",
 			m: map[string]string{
-				"CODEBUILD_BUILD_ID": "xxx",
-			},
-			exp: true,
-		},
-		{
-			title: "true",
-			m: map[string]string{
-				"CODEBUILD_CI": "true",
+				"DRONE": "true",
 			},
 			exp: true,
 		},
@@ -43,7 +31,7 @@ func TestClient_Match(t *testing.T) { //nolint:nosnakecase
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := codebuild.New(newGetenv(d.m))
+			client := cienv.NewDrone(newGetenv(d.m))
 			if d.exp {
 				if !client.Match() {
 					t.Fatal("client.Match() = false, wanted true")
@@ -57,7 +45,7 @@ func TestClient_Match(t *testing.T) { //nolint:nosnakecase
 	}
 }
 
-func TestClient_RepoOwner(t *testing.T) { //nolint:nosnakecase
+func TestDrone_RepoOwner(t *testing.T) {
 	t.Parallel()
 	data := []struct {
 		title string
@@ -67,8 +55,8 @@ func TestClient_RepoOwner(t *testing.T) { //nolint:nosnakecase
 		{
 			title: "true",
 			m: map[string]string{
-				"CODEBUILD_BUILD_ID":        "xxx",
-				"CODEBUILD_SOURCE_REPO_URL": "https://github.com/suzuki-shunsuke/go-ci-env.git",
+				"DRONE":            "true",
+				"DRONE_REPO_OWNER": "suzuki-shunsuke",
 			},
 			exp: "suzuki-shunsuke",
 		},
@@ -77,7 +65,7 @@ func TestClient_RepoOwner(t *testing.T) { //nolint:nosnakecase
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := codebuild.New(newGetenv(d.m))
+			client := cienv.NewDrone(newGetenv(d.m))
 			owner := client.RepoOwner()
 			if owner != d.exp {
 				t.Fatal("client.RepoOwner() = " + owner + ", wanted " + d.exp)
@@ -86,7 +74,7 @@ func TestClient_RepoOwner(t *testing.T) { //nolint:nosnakecase
 	}
 }
 
-func TestClient_RepoName(t *testing.T) { //nolint:nosnakecase
+func TestDrone_RepoName(t *testing.T) {
 	t.Parallel()
 	data := []struct {
 		title string
@@ -96,8 +84,8 @@ func TestClient_RepoName(t *testing.T) { //nolint:nosnakecase
 		{
 			title: "true",
 			m: map[string]string{
-				"CODEBUILD_BUILD_ID":        "xxx",
-				"CODEBUILD_SOURCE_REPO_URL": "https://github.com/suzuki-shunsuke/go-ci-env.git",
+				"DRONE":           "true",
+				"DRONE_REPO_NAME": "go-ci-env",
 			},
 			exp: "go-ci-env",
 		},
@@ -106,7 +94,7 @@ func TestClient_RepoName(t *testing.T) { //nolint:nosnakecase
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := codebuild.New(newGetenv(d.m))
+			client := cienv.NewDrone(newGetenv(d.m))
 			repo := client.RepoName()
 			if repo != d.exp {
 				t.Fatal("client.RepoName() = " + repo + ", wanted " + d.exp)
@@ -115,7 +103,7 @@ func TestClient_RepoName(t *testing.T) { //nolint:nosnakecase
 	}
 }
 
-func TestClient_SHA(t *testing.T) { //nolint:nosnakecase
+func TestDrone_SHA(t *testing.T) {
 	t.Parallel()
 	data := []struct {
 		title string
@@ -125,8 +113,8 @@ func TestClient_SHA(t *testing.T) { //nolint:nosnakecase
 		{
 			title: "true",
 			m: map[string]string{
-				"CODEBUILD_BUILD_ID":                "xxx",
-				"CODEBUILD_RESOLVED_SOURCE_VERSION": "c0c29ca335f2987583c9ecf077e4b476ca78b660",
+				"DRONE":            "true",
+				"DRONE_COMMIT_SHA": "c0c29ca335f2987583c9ecf077e4b476ca78b660",
 			},
 			exp: "c0c29ca335f2987583c9ecf077e4b476ca78b660",
 		},
@@ -135,7 +123,7 @@ func TestClient_SHA(t *testing.T) { //nolint:nosnakecase
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := codebuild.New(newGetenv(d.m))
+			client := cienv.NewDrone(newGetenv(d.m))
 			sha := client.SHA()
 			if sha != d.exp {
 				t.Fatal("client.SHA() = " + sha + ", wanted " + d.exp)
@@ -144,7 +132,7 @@ func TestClient_SHA(t *testing.T) { //nolint:nosnakecase
 	}
 }
 
-func TestClient_Branch(t *testing.T) { //nolint:nosnakecase
+func TestDrone_Branch(t *testing.T) {
 	t.Parallel()
 	data := []struct {
 		title string
@@ -154,8 +142,8 @@ func TestClient_Branch(t *testing.T) { //nolint:nosnakecase
 		{
 			title: "true",
 			m: map[string]string{
-				"CODEBUILD_BUILD_ID":         "xxx",
-				"CODEBUILD_WEBHOOK_HEAD_REF": "refs/heads/test",
+				"DRONE":               "true",
+				"DRONE_SOURCE_BRANCH": "test",
 			},
 			exp: "test",
 		},
@@ -164,7 +152,7 @@ func TestClient_Branch(t *testing.T) { //nolint:nosnakecase
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := codebuild.New(newGetenv(d.m))
+			client := cienv.NewDrone(newGetenv(d.m))
 			branch := client.Branch()
 			if branch != d.exp {
 				t.Fatal("client.Branch() = " + branch + ", wanted " + d.exp)
@@ -173,7 +161,7 @@ func TestClient_Branch(t *testing.T) { //nolint:nosnakecase
 	}
 }
 
-func TestClient_PRBaseBranch(t *testing.T) { //nolint:nosnakecase
+func TestDrone_PRBaseBranch(t *testing.T) {
 	t.Parallel()
 	data := []struct {
 		title string
@@ -183,8 +171,8 @@ func TestClient_PRBaseBranch(t *testing.T) { //nolint:nosnakecase
 		{
 			title: "true",
 			m: map[string]string{
-				"CODEBUILD_BUILD_ID":         "xxx",
-				"CODEBUILD_WEBHOOK_BASE_REF": "refs/heads/test",
+				"DRONE":               "true",
+				"DRONE_TARGET_BRANCH": "test",
 			},
 			exp: "test",
 		},
@@ -193,7 +181,7 @@ func TestClient_PRBaseBranch(t *testing.T) { //nolint:nosnakecase
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := codebuild.New(newGetenv(d.m))
+			client := cienv.NewDrone(newGetenv(d.m))
 			branch := client.PRBaseBranch()
 			if branch != d.exp {
 				t.Fatal("client.PRBaseBranch() = " + branch + ", wanted " + d.exp)
@@ -202,7 +190,36 @@ func TestClient_PRBaseBranch(t *testing.T) { //nolint:nosnakecase
 	}
 }
 
-func TestClient_IsPR(t *testing.T) { //nolint:nosnakecase
+func TestDrone_Tag(t *testing.T) {
+	t.Parallel()
+	data := []struct {
+		title string
+		m     map[string]string
+		exp   string
+	}{
+		{
+			title: "true",
+			m: map[string]string{
+				"DRONE":     "true",
+				"DRONE_TAG": "test",
+			},
+			exp: "test",
+		},
+	}
+	for _, d := range data {
+		d := d
+		t.Run(d.title, func(t *testing.T) {
+			t.Parallel()
+			client := cienv.NewDrone(newGetenv(d.m))
+			tag := client.Tag()
+			if tag != d.exp {
+				t.Fatal("client.Tag() = " + tag + ", wanted " + d.exp)
+			}
+		})
+	}
+}
+
+func TestDrone_IsPR(t *testing.T) {
 	t.Parallel()
 	data := []struct {
 		title string
@@ -212,15 +229,15 @@ func TestClient_IsPR(t *testing.T) { //nolint:nosnakecase
 		{
 			title: "true",
 			m: map[string]string{
-				"CODEBUILD_BUILD_ID":       "xxx",
-				"CODEBUILD_SOURCE_VERSION": "pr/1",
+				"DRONE":              "true",
+				"DRONE_PULL_REQUEST": "https://github.com/suzuki-shunsuke/go-ci-env/pull/1",
 			},
 			exp: true,
 		},
 		{
 			title: "false",
 			m: map[string]string{
-				"CODEBUILD_BUILD_ID": "xxx",
+				"DRONE": "true",
 			},
 		},
 	}
@@ -228,7 +245,7 @@ func TestClient_IsPR(t *testing.T) { //nolint:nosnakecase
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := codebuild.New(newGetenv(d.m))
+			client := cienv.NewDrone(newGetenv(d.m))
 			if d.exp {
 				if !client.IsPR() {
 					t.Fatal("client.IsPR() = false, wanted true")
@@ -242,7 +259,7 @@ func TestClient_IsPR(t *testing.T) { //nolint:nosnakecase
 	}
 }
 
-func TestClient_PRNumber(t *testing.T) { //nolint:nosnakecase
+func TestDrone_PRNumber(t *testing.T) { //nolint:dupl
 	t.Parallel()
 	data := []struct {
 		title string
@@ -253,23 +270,23 @@ func TestClient_PRNumber(t *testing.T) { //nolint:nosnakecase
 		{
 			title: "true",
 			m: map[string]string{
-				"CODEBUILD_BUILD_ID":       "xxx",
-				"CODEBUILD_SOURCE_VERSION": "pr/1",
+				"DRONE":              "true",
+				"DRONE_PULL_REQUEST": "1",
 			},
 			exp: 1,
 		},
 		{
 			title: "not pull request",
 			m: map[string]string{
-				"CODEBUILD_BUILD_ID": "xxx",
+				"DRONE": "true",
 			},
 			exp: 0,
 		},
 		{
 			title: "invalid pull request",
 			m: map[string]string{
-				"CODEBUILD_BUILD_ID":       "xxx",
-				"CODEBUILD_SOURCE_VERSION": "pr/hello",
+				"DRONE":              "true",
+				"DRONE_PULL_REQUEST": "hello",
 			},
 			isErr: true,
 		},
@@ -278,7 +295,7 @@ func TestClient_PRNumber(t *testing.T) { //nolint:nosnakecase
 		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
-			client := codebuild.New(newGetenv(d.m))
+			client := cienv.NewDrone(newGetenv(d.m))
 			num, err := client.PRNumber()
 			if d.isErr {
 				if err == nil {
