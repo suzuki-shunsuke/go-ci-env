@@ -40,7 +40,7 @@ func NewGitHubActions(param *Param) *GitHubActions {
 	}
 }
 
-func (gha *GitHubActions) CI() string {
+func (gha *GitHubActions) ID() string {
 	return "github-actions"
 }
 
