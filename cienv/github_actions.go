@@ -99,7 +99,8 @@ func (gha *GitHubActions) getPRNumberFromPayload(body io.Reader) (int, error) {
 
 func (gha *GitHubActions) JobURL() string {
 	return fmt.Sprintf(
-		"https://github.com/%s/actions/runs/%s",
+		"%s/%s/actions/runs/%s",
+		gha.getenv("GITHUB_SERVER_URL"),
 		gha.getenv("GITHUB_REPOSITORY"),
 		gha.getenv("GITHUB_RUN_ID"),
 	)
