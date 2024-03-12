@@ -4,7 +4,7 @@ import (
 	"io"
 )
 
-type Platform interface {
+type Platform interface { //nolint:interfacebloat
 	ID() string
 	Match() bool
 	RepoOwner() string

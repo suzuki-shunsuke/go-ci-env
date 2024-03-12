@@ -1,4 +1,3 @@
-//nolint:nosnakecase
 package cienv_test
 
 import (
