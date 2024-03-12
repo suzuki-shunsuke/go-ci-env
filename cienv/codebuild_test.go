@@ -1,3 +1,4 @@
+//nolint:goconst
 package cienv_test
 
 import (
@@ -7,7 +8,7 @@ import (
 	"github.com/suzuki-shunsuke/go-ci-env/v3/cienv"
 )
 
-func TestCodeBuild_Match(t *testing.T) { //nolint:nosnakecase
+func TestCodeBuild_Match(t *testing.T) {
 	t.Parallel()
 	data := []struct {
 		title string
@@ -53,7 +54,7 @@ func TestCodeBuild_Match(t *testing.T) { //nolint:nosnakecase
 	}
 }
 
-func TestCodeBuild_RepoOwner(t *testing.T) { //nolint:nosnakecase
+func TestCodeBuild_RepoOwner(t *testing.T) {
 	t.Parallel()
 	data := []struct {
 		title string
@@ -84,7 +85,7 @@ func TestCodeBuild_RepoOwner(t *testing.T) { //nolint:nosnakecase
 	}
 }
 
-func TestCodeBuild_RepoName(t *testing.T) { //nolint:nosnakecase
+func TestCodeBuild_RepoName(t *testing.T) {
 	t.Parallel()
 	data := []struct {
 		title string
@@ -115,7 +116,7 @@ func TestCodeBuild_RepoName(t *testing.T) { //nolint:nosnakecase
 	}
 }
 
-func TestCodeBuild_SHA(t *testing.T) { //nolint:nosnakecase
+func TestCodeBuild_SHA(t *testing.T) {
 	t.Parallel()
 	data := []struct {
 		title string
@@ -146,7 +147,7 @@ func TestCodeBuild_SHA(t *testing.T) { //nolint:nosnakecase
 	}
 }
 
-func TestCodeBuild_Branch(t *testing.T) { //nolint:nosnakecase
+func TestCodeBuild_Branch(t *testing.T) {
 	t.Parallel()
 	data := []struct {
 		title string
@@ -177,7 +178,7 @@ func TestCodeBuild_Branch(t *testing.T) { //nolint:nosnakecase
 	}
 }
 
-func TestCodeBuild_PRBaseBranch(t *testing.T) { //nolint:nosnakecase
+func TestCodeBuild_PRBaseBranch(t *testing.T) {
 	t.Parallel()
 	data := []struct {
 		title string
@@ -208,7 +209,7 @@ func TestCodeBuild_PRBaseBranch(t *testing.T) { //nolint:nosnakecase
 	}
 }
 
-func TestCodeBuild_IsPR(t *testing.T) { //nolint:nosnakecase
+func TestCodeBuild_IsPR(t *testing.T) {
 	t.Parallel()
 	data := []struct {
 		title string
@@ -250,7 +251,7 @@ func TestCodeBuild_IsPR(t *testing.T) { //nolint:nosnakecase
 	}
 }
 
-func TestCodeBuild_PRNumber(t *testing.T) { //nolint:nosnakecase,dupl
+func TestCodeBuild_PRNumber(t *testing.T) { //nolint:dupl
 	t.Parallel()
 	data := []struct {
 		title string

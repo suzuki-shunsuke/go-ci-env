@@ -1,3 +1,4 @@
+//nolint:goconst
 package cienv_test
 
 import (
@@ -13,7 +14,7 @@ func newGetenv(m map[string]string) func(string) string {
 	}
 }
 
-func TestClient_Match(t *testing.T) { //nolint:nosnakecase
+func TestClient_Match(t *testing.T) {
 	t.Parallel()
 	data := []struct {
 		title string
@@ -52,7 +53,7 @@ func TestClient_Match(t *testing.T) { //nolint:nosnakecase
 	}
 }
 
-func TestClient_RepoOwner(t *testing.T) { //nolint:nosnakecase
+func TestClient_RepoOwner(t *testing.T) {
 	t.Parallel()
 	data := []struct {
 		title string
@@ -83,7 +84,7 @@ func TestClient_RepoOwner(t *testing.T) { //nolint:nosnakecase
 	}
 }
 
-func TestClient_RepoName(t *testing.T) { //nolint:nosnakecase
+func TestClient_RepoName(t *testing.T) {
 	t.Parallel()
 	data := []struct {
 		title string
@@ -114,7 +115,7 @@ func TestClient_RepoName(t *testing.T) { //nolint:nosnakecase
 	}
 }
 
-func TestClient_SHA(t *testing.T) { //nolint:nosnakecase
+func TestClient_SHA(t *testing.T) {
 	t.Parallel()
 	data := []struct {
 		title string
@@ -145,7 +146,7 @@ func TestClient_SHA(t *testing.T) { //nolint:nosnakecase
 	}
 }
 
-func TestClient_Branch(t *testing.T) { //nolint:nosnakecase
+func TestClient_Branch(t *testing.T) {
 	t.Parallel()
 	data := []struct {
 		title string
@@ -176,7 +177,7 @@ func TestClient_Branch(t *testing.T) { //nolint:nosnakecase
 	}
 }
 
-func TestClient_Tag(t *testing.T) { //nolint:nosnakecase
+func TestClient_Tag(t *testing.T) {
 	t.Parallel()
 	data := []struct {
 		title string
@@ -207,7 +208,7 @@ func TestClient_Tag(t *testing.T) { //nolint:nosnakecase
 	}
 }
 
-func TestClient_IsPR(t *testing.T) { //nolint:nosnakecase
+func TestClient_IsPR(t *testing.T) {
 	t.Parallel()
 	data := []struct {
 		title string
@@ -249,7 +250,7 @@ func TestClient_IsPR(t *testing.T) { //nolint:nosnakecase
 	}
 }
 
-func TestClient_PRNumber(t *testing.T) { //nolint:nosnakecase,dupl
+func TestClient_PRNumber(t *testing.T) { //nolint:dupl
 	t.Parallel()
 	data := []struct {
 		title string
