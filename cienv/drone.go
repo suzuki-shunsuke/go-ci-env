@@ -21,48 +21,48 @@ func NewDrone(param *Param) *Drone {
 	}
 }
 
-func (drone *Drone) ID() string {
+func (d *Drone) ID() string {
 	return "drone"
 }
 
-func (drone *Drone) Match() bool {
-	return drone.getenv("DRONE") != ""
+func (d *Drone) Match() bool {
+	return d.getenv("DRONE") != ""
 }
 
-func (drone *Drone) RepoOwner() string {
-	return drone.getenv("DRONE_REPO_OWNER")
+func (d *Drone) RepoOwner() string {
+	return d.getenv("DRONE_REPO_OWNER")
 }
 
-func (drone *Drone) RepoName() string {
-	return drone.getenv("DRONE_REPO_NAME")
+func (d *Drone) RepoName() string {
+	return d.getenv("DRONE_REPO_NAME")
 }
 
-func (drone *Drone) Ref() string {
-	return drone.getenv("DRONE_COMMIT_REF")
+func (d *Drone) Ref() string {
+	return d.getenv("DRONE_COMMIT_REF")
 }
 
-func (drone *Drone) Tag() string {
-	return drone.getenv("DRONE_TAG")
+func (d *Drone) Tag() string {
+	return d.getenv("DRONE_TAG")
 }
 
-func (drone *Drone) Branch() string {
-	return drone.getenv("DRONE_SOURCE_BRANCH")
+func (d *Drone) Branch() string {
+	return d.getenv("DRONE_SOURCE_BRANCH")
 }
 
-func (drone *Drone) PRBaseBranch() string {
-	return drone.getenv("DRONE_TARGET_BRANCH")
+func (d *Drone) PRBaseBranch() string {
+	return d.getenv("DRONE_TARGET_BRANCH")
 }
 
-func (drone *Drone) SHA() string {
-	return drone.getenv("DRONE_COMMIT_SHA")
+func (d *Drone) SHA() string {
+	return d.getenv("DRONE_COMMIT_SHA")
 }
 
-func (drone *Drone) IsPR() bool {
-	return drone.getenv("DRONE_PULL_REQUEST") != ""
+func (d *Drone) IsPR() bool {
+	return d.getenv("DRONE_PULL_REQUEST") != ""
 }
 
-func (drone *Drone) PRNumber() (int, error) {
-	pr := drone.getenv("DRONE_PULL_REQUEST")
+func (d *Drone) PRNumber() (int, error) {
+	pr := d.getenv("DRONE_PULL_REQUEST")
 	if pr == "" {
 		return 0, nil
 	}
@@ -73,11 +73,11 @@ func (drone *Drone) PRNumber() (int, error) {
 	return 0, fmt.Errorf("DRONE_PULL_REQUEST is invalid. It failed to parse DRONE_PULL_REQUEST as an integer: %w", err)
 }
 
-func (drone *Drone) JobURL() string {
+func (d *Drone) JobURL() string {
 	return fmt.Sprintf(
 		"%s/%s/%s",
-		drone.getenv("DRONE_BUILD_LINK"),
-		drone.getenv("DRONE_STAGE_NUMBER"),
-		drone.getenv("DRONE_STEP_NUMBER"),
+		d.getenv("DRONE_BUILD_LINK"),
+		d.getenv("DRONE_STAGE_NUMBER"),
+		d.getenv("DRONE_STEP_NUMBER"),
 	)
 }
