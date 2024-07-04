@@ -243,7 +243,7 @@ func TestGitHubActions_IsPR(t *testing.T) {
 	}
 }
 
-func TestGitHubActions_Number(t *testing.T) {
+func TestGitHubActions_Number(t *testing.T) { //nolint:funlen
 	t.Parallel()
 	data := []struct {
 		title string
