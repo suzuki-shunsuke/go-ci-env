@@ -251,7 +251,7 @@ func TestCodeBuild_IsPR(t *testing.T) {
 	}
 }
 
-func TestCodeBuild_PRNumber(t *testing.T) { //nolint:dupl
+func TestCodeBuild_Number(t *testing.T) { //nolint:dupl
 	t.Parallel()
 	data := []struct {
 		title string
@@ -290,10 +290,10 @@ func TestCodeBuild_PRNumber(t *testing.T) { //nolint:dupl
 			client := cienv.NewCodeBuild(&cienv.Param{
 				Getenv: newGetenv(d.m),
 			})
-			num, err := client.PRNumber()
+			num, err := client.Number()
 			if d.isErr {
 				if err == nil {
-					t.Fatal("client.PRNumber() should return an error")
+					t.Fatal("client.Number() should return an error")
 				}
 				return
 			}
@@ -301,7 +301,7 @@ func TestCodeBuild_PRNumber(t *testing.T) { //nolint:dupl
 				t.Fatal(err)
 			}
 			if num != d.exp {
-				t.Fatal("client.PRNumber() = " + strconv.Itoa(num) + ", wanted " + strconv.Itoa(d.exp))
+				t.Fatal("client.Number() = " + strconv.Itoa(num) + ", wanted " + strconv.Itoa(d.exp))
 			}
 		})
 	}

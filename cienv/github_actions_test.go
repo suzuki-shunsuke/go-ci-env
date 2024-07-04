@@ -243,7 +243,7 @@ func TestGitHubActions_IsPR(t *testing.T) {
 	}
 }
 
-func TestGitHubActions_PRNumber(t *testing.T) {
+func TestGitHubActions_Number(t *testing.T) {
 	t.Parallel()
 	data := []struct {
 		title string
@@ -269,6 +269,24 @@ func TestGitHubActions_PRNumber(t *testing.T) {
 			},
 			exp: 4,
 		},
+		{
+			title: "issues",
+			m: map[string]string{
+				"GITHUB_ACTIONS":    "true",
+				"GITHUB_EVENT_NAME": "issues",
+				"GITHUB_EVENT_PATH": "testdata/issues.json",
+			},
+			exp: 5,
+		},
+		{
+			title: "issues",
+			m: map[string]string{
+				"GITHUB_ACTIONS":    "true",
+				"GITHUB_EVENT_NAME": "issue_comment",
+				"GITHUB_EVENT_PATH": "testdata/issues.json",
+			},
+			exp: 5,
+		},
 	}
 	for _, d := range data {
 		d := d
@@ -277,7 +295,7 @@ func TestGitHubActions_PRNumber(t *testing.T) {
 			client := cienv.NewGitHubActions(&cienv.Param{
 				Getenv: newGetenv(d.m),
 			})
-			n, err := client.PRNumber()
+			n, err := client.Number()
 			if err != nil {
 				if d.isErr {
 					return

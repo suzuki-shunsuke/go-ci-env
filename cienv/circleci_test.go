@@ -250,7 +250,7 @@ func TestClient_IsPR(t *testing.T) {
 	}
 }
 
-func TestClient_PRNumber(t *testing.T) { //nolint:dupl
+func TestClient_Number(t *testing.T) { //nolint:dupl
 	t.Parallel()
 	data := []struct {
 		title string
@@ -289,10 +289,10 @@ func TestClient_PRNumber(t *testing.T) { //nolint:dupl
 			client := cienv.NewCircleCI(&cienv.Param{
 				Getenv: newGetenv(d.m),
 			})
-			num, err := client.PRNumber()
+			num, err := client.Number()
 			if d.isErr {
 				if err == nil {
-					t.Fatal("client.PRNumber() should return an error")
+					t.Fatal("client.Number() should return an error")
 				}
 				return
 			}
@@ -300,7 +300,7 @@ func TestClient_PRNumber(t *testing.T) { //nolint:dupl
 				t.Fatal(err)
 			}
 			if num != d.exp {
-				t.Fatal("client.PRNumber() = " + strconv.Itoa(num) + ", wanted " + strconv.Itoa(d.exp))
+				t.Fatal("client.Number() = " + strconv.Itoa(num) + ", wanted " + strconv.Itoa(d.exp))
 			}
 		})
 	}
