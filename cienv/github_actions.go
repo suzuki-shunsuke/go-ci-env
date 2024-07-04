@@ -94,22 +94,41 @@ func (g *GitHubActions) IsPR() bool {
 	return ok
 }
 
+func (g *GitHubActions) Number() (int, error) {
+	n, err := g.IssueNumber()
+	if err != nil {
+		return 0, err
+	}
+	if n != 0 {
+		return n, nil
+	}
+	return g.PRNumber()
+}
+
 func (g *GitHubActions) PRNumber() (int, error) {
-	eventName := g.getenv("GITHUB_EVENT_NAME")
-	eventPath := g.getenv("GITHUB_EVENT_PATH")
-	if eventName == "merge_group" {
+	if g.getenv("GITHUB_EVENT_NAME") == "merge_group" {
 		return g.getPRNumberFromMergeGroup()
 	}
-	f, err := g.read(eventPath)
+	f, err := g.read(g.getenv("GITHUB_EVENT_PATH"))
 	if err != nil {
 		return 0, err
 	}
 	defer f.Close()
-	switch eventName {
-	case "issue_comment", "issues":
-		return g.getPRNumberFromIssuePayload(f)
-	}
 	return g.getPRNumberFromPRPayload(f)
+}
+
+func (g *GitHubActions) IssueNumber() (int, error) {
+	switch g.getenv("GITHUB_EVENT_NAME") {
+	case "issue_comment", "issues":
+		eventPath := g.getenv("GITHUB_EVENT_PATH")
+		f, err := g.read(eventPath)
+		if err != nil {
+			return 0, err
+		}
+		defer f.Close()
+		return g.getIssueNumberFromPayload(f)
+	}
+	return 0, nil
 }
 
 func (g *GitHubActions) getPRNumberFromMergeGroup() (int, error) {
@@ -132,7 +151,7 @@ func (g *GitHubActions) getPRNumberFromPRPayload(body io.Reader) (int, error) {
 	return p.PullRequest.Number, nil
 }
 
-func (g *GitHubActions) getPRNumberFromIssuePayload(body io.Reader) (int, error) {
+func (g *GitHubActions) getIssueNumberFromPayload(body io.Reader) (int, error) {
 	p := gitHubActionsIssuePayload{}
 	if err := json.NewDecoder(body).Decode(&p); err != nil {
 		return 0, fmt.Errorf("parse a GitHub Action payload: %w", err)
