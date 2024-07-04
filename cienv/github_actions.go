@@ -77,7 +77,12 @@ func (gha *GitHubActions) PRBaseBranch() string {
 }
 
 func (gha *GitHubActions) IsPR() bool {
-	return gha.getenv("GITHUB_EVENT_NAME") == "pull_request"
+	events := map[string]struct{}{
+		"pull_request":        {},
+		"pull_request_target": {},
+	}
+	_, ok := events[gha.getenv("GITHUB_EVENT_NAME")]
+	return ok
 }
 
 func (gha *GitHubActions) PRNumber() (int, error) {
