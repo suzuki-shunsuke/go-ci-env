@@ -43,54 +43,54 @@ func NewGitHubActions(param *Param) *GitHubActions {
 	}
 }
 
-func (gha *GitHubActions) ID() string {
+func (g *GitHubActions) ID() string {
 	return "github-actions"
 }
 
-func (gha *GitHubActions) Match() bool {
-	return gha.getenv("GITHUB_ACTIONS") != ""
+func (g *GitHubActions) Match() bool {
+	return g.getenv("GITHUB_ACTIONS") != ""
 }
 
-func (gha *GitHubActions) RepoOwner() string {
-	return gha.getenv("GITHUB_REPOSITORY_OWNER")
+func (g *GitHubActions) RepoOwner() string {
+	return g.getenv("GITHUB_REPOSITORY_OWNER")
 }
 
-func (gha *GitHubActions) RepoName() string {
-	return strings.TrimPrefix(gha.getenv("GITHUB_REPOSITORY"), gha.RepoOwner()+"/")
+func (g *GitHubActions) RepoName() string {
+	return strings.TrimPrefix(g.getenv("GITHUB_REPOSITORY"), g.RepoOwner()+"/")
 }
 
-func (gha *GitHubActions) SHA() string {
-	return gha.getenv("GITHUB_SHA")
+func (g *GitHubActions) SHA() string {
+	return g.getenv("GITHUB_SHA")
 }
 
-func (gha *GitHubActions) Tag() string {
-	return strings.TrimPrefix(gha.getenv("GITHUB_REF"), "refs/tags/")
+func (g *GitHubActions) Tag() string {
+	return strings.TrimPrefix(g.getenv("GITHUB_REF"), "refs/tags/")
 }
 
-func (gha *GitHubActions) Ref() string {
-	return gha.getenv("GITHUB_REF")
+func (g *GitHubActions) Ref() string {
+	return g.getenv("GITHUB_REF")
 }
 
-func (gha *GitHubActions) Branch() string {
-	return strings.TrimPrefix(gha.getenv("GITHUB_REF"), "refs/heads/")
+func (g *GitHubActions) Branch() string {
+	return strings.TrimPrefix(g.getenv("GITHUB_REF"), "refs/heads/")
 }
 
-func (gha *GitHubActions) PRBaseBranch() string {
-	return strings.TrimPrefix(gha.getenv("GITHUB_BASE_REF"), "refs/heads/")
+func (g *GitHubActions) PRBaseBranch() string {
+	return strings.TrimPrefix(g.getenv("GITHUB_BASE_REF"), "refs/heads/")
 }
 
-func (gha *GitHubActions) IsPR() bool {
+func (g *GitHubActions) IsPR() bool {
 	events := map[string]struct{}{
 		"pull_request":        {},
 		"pull_request_target": {},
 	}
-	_, ok := events[gha.getenv("GITHUB_EVENT_NAME")]
+	_, ok := events[g.getenv("GITHUB_EVENT_NAME")]
 	return ok
 }
 
-func (gha *GitHubActions) PRNumber() (int, error) {
-	if gha.getenv("GITHUB_EVENT_NAME") == "merge_group" {
-		a, _, ok := strings.Cut(strings.TrimPrefix(filepath.Base(gha.getenv("GITHUB_REF_NAME")), "pr-"), "-")
+func (g *GitHubActions) PRNumber() (int, error) {
+	if g.getenv("GITHUB_EVENT_NAME") == "merge_group" {
+		a, _, ok := strings.Cut(strings.TrimPrefix(filepath.Base(g.getenv("GITHUB_REF_NAME")), "pr-"), "-")
 		if !ok {
 			return 0, errors.New("GITHUB_REF_NAME is not a valid format")
 		}
@@ -100,15 +100,15 @@ func (gha *GitHubActions) PRNumber() (int, error) {
 		}
 		return n, nil
 	}
-	f, err := gha.read(gha.getenv("GITHUB_EVENT_PATH"))
+	f, err := g.read(g.getenv("GITHUB_EVENT_PATH"))
 	if err != nil {
 		return 0, err
 	}
 	defer f.Close()
-	return gha.getPRNumberFromPayload(f)
+	return g.getPRNumberFromPayload(f)
 }
 
-func (gha *GitHubActions) getPRNumberFromPayload(body io.Reader) (int, error) {
+func (g *GitHubActions) getPRNumberFromPayload(body io.Reader) (int, error) {
 	p := gitHubActionsPayload{}
 	if err := json.NewDecoder(body).Decode(&p); err != nil {
 		return 0, fmt.Errorf("parse a GitHub Action payload: %w", err)
@@ -116,11 +116,11 @@ func (gha *GitHubActions) getPRNumberFromPayload(body io.Reader) (int, error) {
 	return p.PullRequest.Number, nil
 }
 
-func (gha *GitHubActions) JobURL() string {
+func (g *GitHubActions) JobURL() string {
 	return fmt.Sprintf(
 		"%s/%s/actions/runs/%s",
-		gha.getenv("GITHUB_SERVER_URL"),
-		gha.getenv("GITHUB_REPOSITORY"),
-		gha.getenv("GITHUB_RUN_ID"),
+		g.getenv("GITHUB_SERVER_URL"),
+		g.getenv("GITHUB_REPOSITORY"),
+		g.getenv("GITHUB_RUN_ID"),
 	)
 }
