@@ -242,3 +242,54 @@ func TestGitHubActions_IsPR(t *testing.T) {
 		})
 	}
 }
+
+func TestGitHubActions_PRNumber(t *testing.T) {
+	t.Parallel()
+	data := []struct {
+		title string
+		m     map[string]string
+		exp   int
+		isErr bool
+	}{
+		{
+			title: "merge_group",
+			m: map[string]string{
+				"GITHUB_ACTIONS":    "true",
+				"GITHUB_EVENT_NAME": "merge_group",
+				"GITHUB_REF_NAME":   "gh-readonly-queue/ss/foo/pr-4-1ad6ab67a88c67dab34206bec563c8fc57e011d9",
+			},
+			exp: 4,
+		},
+		{
+			title: "pull_request",
+			m: map[string]string{
+				"GITHUB_ACTIONS":    "true",
+				"GITHUB_EVENT_NAME": "pull_request",
+				"GITHUB_EVENT_PATH": "testdata/pull_request.json",
+			},
+			exp: 4,
+		},
+	}
+	for _, d := range data {
+		d := d
+		t.Run(d.title, func(t *testing.T) {
+			t.Parallel()
+			client := cienv.NewGitHubActions(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
+			n, err := client.PRNumber()
+			if err != nil {
+				if d.isErr {
+					return
+				}
+				t.Fatal(err)
+			}
+			if d.isErr {
+				t.Fatal("an error is expected")
+			}
+			if n != d.exp {
+				t.Fatalf("client.PRNumber() = %d, wanted %d", n, d.exp)
+			}
+		})
+	}
+}
