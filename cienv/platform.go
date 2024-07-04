@@ -16,6 +16,8 @@ type Platform interface { //nolint:interfacebloat
 	IsPR() bool
 	// PRNumber returns 0 if it isn't a pull request
 	PRNumber() (int, error)
+	// Number returns either a pull request number or an issue number. It returns 0 if the event isn't associated with a pull request and an issue.
+	Number() (int, error)
 	PRBaseBranch() string
 	JobURL() string
 }

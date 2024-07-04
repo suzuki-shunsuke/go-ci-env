@@ -11,10 +11,16 @@ import (
 	"strings"
 )
 
-type gitHubActionsPayload struct {
+type gitHubActionsPRPayload struct {
 	PullRequest struct {
 		Number int `json:"number"`
 	} `json:"pull_request"`
+}
+
+type gitHubActionsIssuePayload struct {
+	Issue struct {
+		Number int `json:"number"`
+	} `json:"issue"`
 }
 
 type GitHubActions struct {
@@ -88,32 +94,69 @@ func (g *GitHubActions) IsPR() bool {
 	return ok
 }
 
+func (g *GitHubActions) Number() (int, error) {
+	n, err := g.IssueNumber()
+	if err != nil {
+		return 0, err
+	}
+	if n != 0 {
+		return n, nil
+	}
+	return g.PRNumber()
+}
+
 func (g *GitHubActions) PRNumber() (int, error) {
 	if g.getenv("GITHUB_EVENT_NAME") == "merge_group" {
-		a, _, ok := strings.Cut(strings.TrimPrefix(filepath.Base(g.getenv("GITHUB_REF_NAME")), "pr-"), "-")
-		if !ok {
-			return 0, errors.New("GITHUB_REF_NAME is not a valid format")
-		}
-		n, err := strconv.Atoi(a)
-		if err != nil {
-			return 0, fmt.Errorf("parse GITHUB_REF_NAME: %w", err)
-		}
-		return n, nil
+		return g.getPRNumberFromMergeGroup()
 	}
 	f, err := g.read(g.getenv("GITHUB_EVENT_PATH"))
 	if err != nil {
 		return 0, err
 	}
 	defer f.Close()
-	return g.getPRNumberFromPayload(f)
+	return g.getPRNumberFromPRPayload(f)
 }
 
-func (g *GitHubActions) getPRNumberFromPayload(body io.Reader) (int, error) {
-	p := gitHubActionsPayload{}
+func (g *GitHubActions) IssueNumber() (int, error) {
+	switch g.getenv("GITHUB_EVENT_NAME") {
+	case "issue_comment", "issues":
+		eventPath := g.getenv("GITHUB_EVENT_PATH")
+		f, err := g.read(eventPath)
+		if err != nil {
+			return 0, err
+		}
+		defer f.Close()
+		return g.getIssueNumberFromPayload(f)
+	}
+	return 0, nil
+}
+
+func (g *GitHubActions) getPRNumberFromMergeGroup() (int, error) {
+	a, _, ok := strings.Cut(strings.TrimPrefix(filepath.Base(g.getenv("GITHUB_REF_NAME")), "pr-"), "-")
+	if !ok {
+		return 0, errors.New("GITHUB_REF_NAME is not a valid format")
+	}
+	n, err := strconv.Atoi(a)
+	if err != nil {
+		return 0, fmt.Errorf("parse GITHUB_REF_NAME: %w", err)
+	}
+	return n, nil
+}
+
+func (g *GitHubActions) getPRNumberFromPRPayload(body io.Reader) (int, error) {
+	p := gitHubActionsPRPayload{}
 	if err := json.NewDecoder(body).Decode(&p); err != nil {
 		return 0, fmt.Errorf("parse a GitHub Action payload: %w", err)
 	}
 	return p.PullRequest.Number, nil
+}
+
+func (g *GitHubActions) getIssueNumberFromPayload(body io.Reader) (int, error) {
+	p := gitHubActionsIssuePayload{}
+	if err := json.NewDecoder(body).Decode(&p); err != nil {
+		return 0, fmt.Errorf("parse a GitHub Action payload: %w", err)
+	}
+	return p.Issue.Number, nil
 }
 
 func (g *GitHubActions) JobURL() string {
