@@ -2,9 +2,12 @@ package cienv
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
+	"strconv"
 	"strings"
 )
 
@@ -86,6 +89,17 @@ func (gha *GitHubActions) IsPR() bool {
 }
 
 func (gha *GitHubActions) PRNumber() (int, error) {
+	if gha.getenv("GITHUB_EVENT_NAME") == "merge_group" {
+		a, _, ok := strings.Cut(strings.TrimPrefix(filepath.Base(gha.getenv("GITHUB_REF_NAME")), "pr-"), "-")
+		if !ok {
+			return 0, errors.New("GITHUB_REF_NAME is not a valid format")
+		}
+		n, err := strconv.Atoi(a)
+		if err != nil {
+			return 0, fmt.Errorf("parse GITHUB_REF_NAME: %w", err)
+		}
+		return n, nil
+	}
 	f, err := gha.read(gha.getenv("GITHUB_EVENT_PATH"))
 	if err != nil {
 		return 0, err
