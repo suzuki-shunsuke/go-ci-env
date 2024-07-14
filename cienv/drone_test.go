@@ -1,6 +1,7 @@
 package cienv_test
 
 import (
+	"strconv"
 	"testing"
 
 	"github.com/suzuki-shunsuke/go-ci-env/v3/cienv"
@@ -268,6 +269,62 @@ func TestDrone_IsPR(t *testing.T) {
 			}
 			if client.IsPR() {
 				t.Fatal("client.IsPR() = true, wanted false")
+			}
+		})
+	}
+}
+
+func TestDrone_PRNumber(t *testing.T) { //nolint:dupl
+	t.Parallel()
+	data := []struct {
+		title string
+		m     map[string]string
+		exp   int
+		isErr bool
+	}{
+		{
+			title: "true",
+			m: map[string]string{
+				"DRONE":              "true",
+				"DRONE_PULL_REQUEST": "1",
+			},
+			exp: 1,
+		},
+		{
+			title: "not pull request",
+			m: map[string]string{
+				"DRONE": "true",
+			},
+			exp: 0,
+		},
+		{
+			title: "invalid pull request",
+			m: map[string]string{
+				"DRONE":              "true",
+				"DRONE_PULL_REQUEST": "hello",
+			},
+			isErr: true,
+		},
+	}
+	for _, d := range data {
+		d := d
+		t.Run(d.title, func(t *testing.T) {
+			t.Parallel()
+			client := cienv.NewDrone(&cienv.Param{
+				Getenv: newGetenv(d.m),
+			})
+			num, err := client.PRNumber()
+			if d.isErr {
+				if err == nil {
+					t.Fatal("client.PRNumber() should return an error")
+				}
+				return
+			}
+			if err != nil {
+				t.Fatal(err)
+			}
+			if num != d.exp {
+				t.Fatal("client.PRNumber() = " + strconv.Itoa(num) + ", wanted " + strconv.Itoa(d.exp))
 			}
 		})
 	}
