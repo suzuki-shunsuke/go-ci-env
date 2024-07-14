@@ -73,10 +73,6 @@ func (d *Drone) PRNumber() (int, error) {
 	return 0, fmt.Errorf("DRONE_PULL_REQUEST is invalid. It failed to parse DRONE_PULL_REQUEST as an integer: %w", err)
 }
 
-func (d *Drone) Number() (int, error) {
-	return d.PRNumber()
-}
-
 func (d *Drone) JobURL() string {
 	return fmt.Sprintf(
 		"%s/%s/%s",

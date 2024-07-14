@@ -94,17 +94,6 @@ func (g *GitHubActions) IsPR() bool {
 	return ok
 }
 
-func (g *GitHubActions) Number() (int, error) {
-	n, err := g.IssueNumber()
-	if err != nil {
-		return 0, err
-	}
-	if n != 0 {
-		return n, nil
-	}
-	return g.PRNumber()
-}
-
 func (g *GitHubActions) PRNumber() (int, error) {
 	if g.getenv("GITHUB_EVENT_NAME") == "merge_group" {
 		return g.getPRNumberFromMergeGroup()

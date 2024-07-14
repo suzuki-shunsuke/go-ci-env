@@ -1,7 +1,6 @@
 package cienv_test
 
 import (
-	"strconv"
 	"testing"
 
 	"github.com/suzuki-shunsuke/go-ci-env/v3/cienv"
@@ -245,62 +244,6 @@ func TestCodeBuild_IsPR(t *testing.T) {
 			}
 			if client.IsPR() {
 				t.Fatal("client.IsPR() = true, wanted false")
-			}
-		})
-	}
-}
-
-func TestCodeBuild_Number(t *testing.T) { //nolint:dupl
-	t.Parallel()
-	data := []struct {
-		title string
-		m     map[string]string
-		exp   int
-		isErr bool
-	}{
-		{
-			title: "true",
-			m: map[string]string{
-				"CODEBUILD_BUILD_ID":       "xxx",
-				"CODEBUILD_SOURCE_VERSION": "pr/1",
-			},
-			exp: 1,
-		},
-		{
-			title: "not pull request",
-			m: map[string]string{
-				"CODEBUILD_BUILD_ID": "xxx",
-			},
-			exp: 0,
-		},
-		{
-			title: "invalid pull request",
-			m: map[string]string{
-				"CODEBUILD_BUILD_ID":       "xxx",
-				"CODEBUILD_SOURCE_VERSION": "pr/hello",
-			},
-			isErr: true,
-		},
-	}
-	for _, d := range data {
-		d := d
-		t.Run(d.title, func(t *testing.T) {
-			t.Parallel()
-			client := cienv.NewCodeBuild(&cienv.Param{
-				Getenv: newGetenv(d.m),
-			})
-			num, err := client.Number()
-			if d.isErr {
-				if err == nil {
-					t.Fatal("client.Number() should return an error")
-				}
-				return
-			}
-			if err != nil {
-				t.Fatal(err)
-			}
-			if num != d.exp {
-				t.Fatal("client.Number() = " + strconv.Itoa(num) + ", wanted " + strconv.Itoa(d.exp))
 			}
 		})
 	}
