@@ -4,10 +4,8 @@ on: pull_request
 
 jobs:
   path-filter:
-    # Get changed files to filter jobs
-    timeout-minutes: 30
+    timeout-minutes: 10
     outputs:
-      update-aqua-checksums: ${{steps.changes.outputs.update-aqua-checksums}}
       renovate-config-validator: ${{steps.changes.outputs.renovate-config-validator}}
       ghalint: ${{steps.changes.outputs.ghalint}}
       shellcheck: ${{steps.changes.outputs.shellcheck}}
@@ -18,12 +16,6 @@ jobs:
         id: changes
         with:
           filters: |
-            update-aqua-checksums:
-              - aqua/aqua.yaml
-              - aqua/imports/*.yaml
-              - aqua/aqua-checksums.json
-              - .github/workflows/pull_request.yaml
-              - .github/workflows/wc-update-aqua-checksums.yaml
             renovate-config-validator:
               - renovate.json5
               - .github/workflows/pull_request.yaml
@@ -42,16 +34,6 @@ jobs:
     if: failure()
     steps:
       - run: exit 1
-
-  update-aqua-checksums:
-    needs: path-filter
-    if: needs.path-filter.outputs.update-aqua-checksums == 'true'
-    uses: ./.github/workflows/wc-update-aqua-checksums.yaml
-    permissions:
-      contents: read
-    secrets:
-      gh_app_id: ${{secrets.APP_ID}}
-      gh_app_private_key: ${{secrets.APP_PRIVATE_KEY}}
 
   renovate-config-validator:
     uses: ./.github/workflows/wc-renovate-config-validator.yaml
