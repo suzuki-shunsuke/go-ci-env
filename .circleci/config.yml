@@ -6,7 +6,7 @@ workflows:
 jobs:
   test:
     docker:
-      - image: golang:1.24.1@sha256:eb37f58646a901dc7727cf448cae36daaefaba79de33b5058dab79aa4c04aefb
+      - image: golang:1.24.2@sha256:991aa6a6e4431f2f01e869a812934bd60fbc87fb939e4a1ea54b8494ab9d2fc6
     steps:
       - checkout
       - run:
