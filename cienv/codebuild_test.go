@@ -250,7 +250,7 @@ func TestCodeBuild_IsPR(t *testing.T) {
 	}
 }
 
-func TestCodeBuild_PRNumber(t *testing.T) { //nolint:nosnakecase,dupl
+func TestCodeBuild_PRNumber(t *testing.T) { //nolint:dupl
 	t.Parallel()
 	data := []struct {
 		title string

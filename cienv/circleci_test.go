@@ -249,7 +249,7 @@ func TestClient_IsPR(t *testing.T) {
 	}
 }
 
-func TestClient_PRNumber(t *testing.T) { //nolint:nosnakecase,dupl
+func TestClient_PRNumber(t *testing.T) { //nolint:dupl
 	t.Parallel()
 	data := []struct {
 		title string
