@@ -120,6 +120,15 @@ func (g *GitHubActions) IssueNumber() (int, error) {
 	return 0, nil
 }
 
+func (g *GitHubActions) JobURL() string {
+	return fmt.Sprintf(
+		"%s/%s/actions/runs/%s",
+		g.getenv("GITHUB_SERVER_URL"),
+		g.getenv("GITHUB_REPOSITORY"),
+		g.getenv("GITHUB_RUN_ID"),
+	)
+}
+
 func (g *GitHubActions) getPRNumberFromMergeGroup() (int, error) {
 	a, _, ok := strings.Cut(strings.TrimPrefix(filepath.Base(g.getenv("GITHUB_REF_NAME")), "pr-"), "-")
 	if !ok {
@@ -146,13 +155,4 @@ func (g *GitHubActions) getIssueNumberFromPayload(body io.Reader) (int, error) {
 		return 0, fmt.Errorf("parse a GitHub Action payload: %w", err)
 	}
 	return p.Issue.Number, nil
-}
-
-func (g *GitHubActions) JobURL() string {
-	return fmt.Sprintf(
-		"%s/%s/actions/runs/%s",
-		g.getenv("GITHUB_SERVER_URL"),
-		g.getenv("GITHUB_REPOSITORY"),
-		g.getenv("GITHUB_RUN_ID"),
-	)
 }
