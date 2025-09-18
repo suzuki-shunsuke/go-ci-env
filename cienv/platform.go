@@ -31,7 +31,13 @@ func Add(fn func(param *Param) Platform) {
 }
 
 func Get(param *Param) Platform { //nolint:ireturn
-	for _, newPlatform := range platformFuncs {
+	if platformFuncs["github-actions"](param).Match() {
+		return platformFuncs["github-actions"](param)
+	}
+	for k, newPlatform := range platformFuncs {
+		if k == "github-actions" {
+			continue
+		}
 		platform := newPlatform(param)
 		if platform.Match() {
 			return platform
