@@ -26,7 +26,6 @@ func TestGitHubActions_Match(t *testing.T) {
 		},
 	}
 	for _, d := range data {
-		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
 			client := cienv.NewGitHubActions(&cienv.Param{
@@ -62,7 +61,6 @@ func TestGitHubActions_RepoOwner(t *testing.T) {
 		},
 	}
 	for _, d := range data {
-		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
 			client := cienv.NewGitHubActions(&cienv.Param{
@@ -94,7 +92,6 @@ func TestGitHubActions_RepoName(t *testing.T) {
 		},
 	}
 	for _, d := range data {
-		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
 			client := cienv.NewGitHubActions(&cienv.Param{
@@ -125,7 +122,6 @@ func TestGitHubActions_SHA(t *testing.T) {
 		},
 	}
 	for _, d := range data {
-		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
 			client := cienv.NewGitHubActions(&cienv.Param{
@@ -156,7 +152,6 @@ func TestGitHubActions_Branch(t *testing.T) {
 		},
 	}
 	for _, d := range data {
-		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
 			client := cienv.NewGitHubActions(&cienv.Param{
@@ -187,7 +182,6 @@ func TestGitHubActions_PRBaseBranch(t *testing.T) {
 		},
 	}
 	for _, d := range data {
-		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
 			client := cienv.NewGitHubActions(&cienv.Param{
@@ -224,7 +218,6 @@ func TestGitHubActions_IsPR(t *testing.T) {
 		},
 	}
 	for _, d := range data {
-		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
 			client := cienv.NewGitHubActions(&cienv.Param{
