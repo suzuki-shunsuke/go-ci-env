@@ -33,7 +33,6 @@ func TestClient_Match(t *testing.T) {
 		},
 	}
 	for _, d := range data {
-		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
 			client := cienv.NewCircleCI(&cienv.Param{
@@ -69,7 +68,6 @@ func TestClient_RepoOwner(t *testing.T) {
 		},
 	}
 	for _, d := range data {
-		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
 			client := cienv.NewCircleCI(&cienv.Param{
@@ -100,7 +98,6 @@ func TestClient_RepoName(t *testing.T) {
 		},
 	}
 	for _, d := range data {
-		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
 			client := cienv.NewCircleCI(&cienv.Param{
