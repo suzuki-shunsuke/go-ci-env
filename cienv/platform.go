@@ -27,18 +27,15 @@ type Param struct {
 
 func Add(fn func(param *Param) Platform) {
 	p := fn(nil)
-	platformFuncs[p.ID()] = fn
+	platformFuncs = append(platformFuncs, newPlatform{
+		fn: fn,
+		id: p.ID(),
+	})
 }
 
 func Get(param *Param) Platform { //nolint:ireturn
-	if platformFuncs["github-actions"](param).Match() {
-		return platformFuncs["github-actions"](param)
-	}
-	for k, newPlatform := range platformFuncs {
-		if k == "github-actions" {
-			continue
-		}
-		platform := newPlatform(param)
+	for _, newPlatform := range platformFuncs {
+		platform := newPlatform.fn(param)
 		if platform.Match() {
 			return platform
 		}
@@ -46,19 +43,34 @@ func Get(param *Param) Platform { //nolint:ireturn
 	return nil
 }
 
-var platformFuncs = map[string]newPlatform{ //nolint:gochecknoglobals
-	"circleci": func(param *Param) Platform {
-		return NewCircleCI(param)
+var platformFuncs = []newPlatform{ //nolint:gochecknoglobals
+	{
+		id: "github-actions",
+		fn: func(param *Param) Platform {
+			return NewGitHubActions(param)
+		},
 	},
-	"codebuild": func(param *Param) Platform {
-		return NewCodeBuild(param)
+	{
+		id: "circleci",
+		fn: func(param *Param) Platform {
+			return NewCircleCI(param)
+		},
 	},
-	"drone": func(param *Param) Platform {
-		return NewDrone(param)
+	{
+		id: "codebuild",
+		fn: func(param *Param) Platform {
+			return NewCodeBuild(param)
+		},
 	},
-	"github-actions": func(param *Param) Platform {
-		return NewGitHubActions(param)
+	{
+		id: "drone",
+		fn: func(param *Param) Platform {
+			return NewDrone(param)
+		},
 	},
 }
 
-type newPlatform func(param *Param) Platform
+type newPlatform struct {
+	id string
+	fn func(param *Param) Platform
+}
