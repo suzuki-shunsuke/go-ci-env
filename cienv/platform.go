@@ -68,6 +68,12 @@ var platformFuncs = []newPlatform{ //nolint:gochecknoglobals
 			return NewDrone(param)
 		},
 	},
+	{
+		id: "atlantis",
+		fn: func(param *Param) Platform {
+			return NewAtlantis(param)
+		},
+	},
 }
 
 type newPlatform struct {
