@@ -249,10 +249,10 @@ func TestAtlantis_IsPR(t *testing.T) {
 func TestAtlantis_PRNumber(t *testing.T) {
 	t.Parallel()
 	data := []struct {
-		title  string
-		m      map[string]string
-		exp    int
-		isErr  bool
+		title string
+		m     map[string]string
+		exp   int
+		isErr bool
 	}{
 		{
 			title: "normal",
