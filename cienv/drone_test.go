@@ -27,7 +27,6 @@ func TestDrone_Match(t *testing.T) {
 		},
 	}
 	for _, d := range data {
-		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
 			client := cienv.NewDrone(&cienv.Param{
@@ -63,7 +62,6 @@ func TestDrone_RepoOwner(t *testing.T) {
 		},
 	}
 	for _, d := range data {
-		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
 			client := cienv.NewDrone(&cienv.Param{
@@ -94,7 +92,6 @@ func TestDrone_RepoName(t *testing.T) {
 		},
 	}
 	for _, d := range data {
-		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
 			client := cienv.NewDrone(&cienv.Param{
@@ -125,7 +122,6 @@ func TestDrone_SHA(t *testing.T) {
 		},
 	}
 	for _, d := range data {
-		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
 			client := cienv.NewDrone(&cienv.Param{
@@ -156,7 +152,6 @@ func TestDrone_Branch(t *testing.T) {
 		},
 	}
 	for _, d := range data {
-		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
 			client := cienv.NewDrone(&cienv.Param{
@@ -187,7 +182,6 @@ func TestDrone_PRBaseBranch(t *testing.T) {
 		},
 	}
 	for _, d := range data {
-		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
 			client := cienv.NewDrone(&cienv.Param{
@@ -218,7 +212,6 @@ func TestDrone_Tag(t *testing.T) {
 		},
 	}
 	for _, d := range data {
-		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
 			client := cienv.NewDrone(&cienv.Param{
@@ -255,7 +248,6 @@ func TestDrone_IsPR(t *testing.T) {
 		},
 	}
 	for _, d := range data {
-		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
 			client := cienv.NewDrone(&cienv.Param{
@@ -307,7 +299,6 @@ func TestDrone_PRNumber(t *testing.T) { //nolint:dupl
 		},
 	}
 	for _, d := range data {
-		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
 			client := cienv.NewDrone(&cienv.Param{
