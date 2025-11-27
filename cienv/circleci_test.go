@@ -128,7 +128,6 @@ func TestClient_SHA(t *testing.T) {
 		},
 	}
 	for _, d := range data {
-		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
 			client := cienv.NewCircleCI(&cienv.Param{
@@ -159,7 +158,6 @@ func TestClient_Branch(t *testing.T) {
 		},
 	}
 	for _, d := range data {
-		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
 			client := cienv.NewCircleCI(&cienv.Param{
@@ -190,7 +188,6 @@ func TestClient_Tag(t *testing.T) {
 		},
 	}
 	for _, d := range data {
-		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
 			client := cienv.NewCircleCI(&cienv.Param{
@@ -227,7 +224,6 @@ func TestClient_IsPR(t *testing.T) {
 		},
 	}
 	for _, d := range data {
-		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
 			client := cienv.NewCircleCI(&cienv.Param{
@@ -279,7 +275,6 @@ func TestClient_PRNumber(t *testing.T) { //nolint:dupl
 		},
 	}
 	for _, d := range data {
-		d := d
 		t.Run(d.title, func(t *testing.T) {
 			t.Parallel()
 			client := cienv.NewCircleCI(&cienv.Param{
