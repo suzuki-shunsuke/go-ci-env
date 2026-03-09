@@ -12,7 +12,7 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-go@4b73464bb391d4059bd26b0524d20df3927bd417 # v6.3.0
         with:
-          go-version: '1.26.0'
+          go-version: '1.26.1'
       - uses: aquaproj/aqua-installer@11dd79b4e498d471a9385aa9fb7f62bb5f52a73c # v4.0.4
         with:
           aqua_version: v2.56.7
