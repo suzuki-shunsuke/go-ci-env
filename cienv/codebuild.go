@@ -79,11 +79,11 @@ func (cb *CodeBuild) PRNumber() (int, error) {
 	if !strings.HasPrefix(pr, "pr/") {
 		return 0, nil
 	}
-	i := strings.Index(pr, "/")
-	if i == -1 {
+	_, after, ok := strings.Cut(pr, "/")
+	if !ok {
 		return 0, nil
 	}
-	b, err := strconv.Atoi(pr[i+1:])
+	b, err := strconv.Atoi(after)
 	if err == nil {
 		return b, nil
 	}
