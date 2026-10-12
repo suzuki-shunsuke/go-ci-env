@@ -5,29 +5,6 @@ on:
       TAKUMI_GUARD_BOT_ID:
         required: true
 jobs:
-  path-filter:
-    timeout-minutes: 10
-    outputs:
-      renovate-config-validator: ${{steps.changes.outputs.renovate-config-validator}}
-    runs-on: ubuntu-26.04
-    permissions: {}
-    steps:
-      - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
-        id: changes
-        with:
-          filters: |
-            renovate-config-validator:
-              - renovate.json5
-              - .github/workflows/pull_request.yaml
-              - .github/workflows/wc-renovate-config-validator.yaml
-
-  renovate-config-validator:
-    uses: ./.github/workflows/wc-renovate-config-validator.yaml
-    needs: path-filter
-    if: needs.path-filter.outputs.renovate-config-validator == 'true'
-    permissions:
-      contents: read
-
   test:
     uses: ./.github/workflows/wc-test.yaml
     secrets:
@@ -35,3 +12,11 @@ jobs:
     permissions:
       contents: read
       id-token: write
+
+  test-workflow:
+    uses: suzuki-shunsuke/test-workflow/.github/workflows/test.yaml@51ece8dcaabff59820bfb2053c56e3cb281cf7b2 # v0.0.1
+    with:
+      aqua_version: v2.64.0
+    permissions:
+      contents: read
+      pull-requests: read
