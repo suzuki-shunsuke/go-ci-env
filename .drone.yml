@@ -8,14 +8,14 @@ volumes:
     temp: {}
 steps:
   - name: download go modules
-    image: golang:1.27.3@sha256:f20d83a83e18dbd2a4714b8ffd4b30b287b6243962dd75608e86abcc63ba4efc
+    image: golang:1.27.4@sha256:5e8afd493a7124a8586e134d9b532731161d4b9becf9dee5a5956b107426f93d
     commands:
       - go mod download
     volumes: &volumes
       - name: gopath
         path: /go
   - name: test
-    image: golang:1.27.3@sha256:f20d83a83e18dbd2a4714b8ffd4b30b287b6243962dd75608e86abcc63ba4efc
+    image: golang:1.27.4@sha256:5e8afd493a7124a8586e134d9b532731161d4b9becf9dee5a5956b107426f93d
     commands:
       - go test -race -covermode=atomic ./...
     volumes: *volumes
